@@ -31,5 +31,5 @@ jobs:
         with:
           directory: .
           include: |
-            src/index.php
+            index.php
           fail-on-warnings: true
