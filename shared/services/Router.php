@@ -25,7 +25,7 @@ class Router
     return $this->config->getOrDefault($controller, $this->defaultController);
   }
 
-  private function getMethod(string $controller, string $method)
+  private function getMethod(object $controller, string $method)
   {
     return method_exists($controller, $method) ? $method : $this->defaultMethod;
   }

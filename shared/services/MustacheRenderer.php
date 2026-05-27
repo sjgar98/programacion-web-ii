@@ -1,5 +1,6 @@
-<?
-require_once(__DIR__ . '/../vendor/mustache/src/Mustache/Autoloader.php');
+<?php
+//require_once(__DIR__ . '/../vendor/mustache/src/Mustache/Autoloader.php');
+require_once(__DIR__ . '/../../vendor/mustache/src/Mustache/Autoloader.php');
 
 class MustacheRenderer implements Renderer
 {
