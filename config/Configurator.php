@@ -5,7 +5,7 @@ class Configurator
 
   public function __construct()
   {
-    $this->config = parse_ini_file("config/config.ini");
+    $this->config = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . "config.ini");
   }
 
   private function getDatabase(): Database
@@ -46,5 +46,15 @@ class Configurator
   public function getEjemploModel()
   {
     return new EjemploModel($this->getDatabase());
+  }
+
+  public function getDatabaseController()
+  {
+    return new DatabaseController($this->getDatabaseModel());
+  }
+
+  public function getDatabaseModel()
+  {
+    return new DatabaseModel($this->getDatabase());
   }
 }
