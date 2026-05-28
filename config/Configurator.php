@@ -23,11 +23,6 @@ class Configurator
     return new MustacheRenderer(__DIR__ . '/../view');
   }
 
-  public function getDatabaseMigrator(): DatabaseMigrator
-  {
-    return new DatabaseMigrator($this->getDatabase());
-  }
-
   public function getOrDefault(string $controllerName, string $defaultControllerName)
   {
     $getter = 'get' . ucfirst($controllerName) . 'Controller';
@@ -51,5 +46,15 @@ class Configurator
   public function getEjemploModel()
   {
     return new EjemploModel($this->getDatabase());
+  }
+
+  public function getDatabaseController()
+  {
+    return new DatabaseController($this->getDatabaseModel());
+  }
+
+  public function getDatabaseModel()
+  {
+    return new DatabaseModel($this->getDatabase());
   }
 }

@@ -1,16 +1,16 @@
 <?php
-class DatabaseMigrator
+
+class DatabaseModel
 {
-  private readonly string $migrationsDir;
   private Database $database;
+  private string $migrationsDir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database';
 
   public function __construct(Database $database)
   {
-    $this->migrationsDir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'database';
     $this->database = $database;
   }
 
-  public function runDatabaseMigrations(): void
+  public function migrarDatabase(): void
   {
     # Generar la tabla de migraciones si no existe
     $this->database->begin_transaction();
@@ -24,7 +24,7 @@ class DatabaseMigrator
     } catch (Exception $exception) {
       $this->database->rollback_transaction();
       Log::error("SQL : $exception");
-      die();
+      die("<div>$exception</div>");
     }
 
     # Buscar todos los archivos .sql en /database
@@ -35,6 +35,7 @@ class DatabaseMigrator
           return str_ends_with($nombreArchivo, ".sql");
         }
       );
+
     # Buscar todas las migraciones ya realizadas, y mappear a objetos
     $migraciones = array_map(
       function ($migracion) {
@@ -57,12 +58,12 @@ class DatabaseMigrator
           $this->database->execute("INSERT INTO migraciones (migracion) VALUES (\"$migracionArchivo\");");
           $this->database->commit_transaction();
           Log::info("SQL : Ejecutada migracion $migracionArchivo");
+          echo "<div>Ejecutada migracion $migracionArchivo</div>";
         } catch (Exception $exception) {
           $this->database->rollback_transaction();
           Log::error("SQL : $exception");
-          die();
+          die("<div>$exception</div>");
         }
-        echo "<div>Se ejecutó la migración " . $migracionArchivo . "</div>";
       }
     }
   }
