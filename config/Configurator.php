@@ -5,7 +5,7 @@ class Configurator
 
   public function __construct()
   {
-    $this->config = parse_ini_file("config/config.ini");
+    $this->config = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . "config.ini");
   }
 
   private function getDatabase(): Database
@@ -21,6 +21,11 @@ class Configurator
   private function getRenderer(): Renderer
   {
     return new MustacheRenderer(__DIR__ . '/../view');
+  }
+
+  public function getDatabaseMigrator(): DatabaseMigrator
+  {
+    return new DatabaseMigrator($this->getDatabase());
   }
 
   public function getOrDefault(string $controllerName, string $defaultControllerName)
