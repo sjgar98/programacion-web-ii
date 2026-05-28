@@ -19,7 +19,6 @@ class EjemploController
     $this->renderer->render("verEjemploView", ['ejemplos' => $this->model->getAllElementos()]);
   }
 
-
   public function procesarAlta()
   {
     $nombre = $this->request->post('nombre');
