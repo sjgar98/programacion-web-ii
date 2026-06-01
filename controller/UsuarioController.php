@@ -19,7 +19,12 @@ class UsuarioController
     public function ver()
     {
         Log::info("UsuarioController::ver");
-        $this->renderer->render("registro.mustache",[]);
+        $anios = [];
+        for ($i = 2026; $i >= 1930; $i--) {
+            $anios[] = ['anio' => $i];
+        }
+
+        $this->renderer->render("registro.mustache", ["anios" => $anios]);
     }
 
     public function procesar()

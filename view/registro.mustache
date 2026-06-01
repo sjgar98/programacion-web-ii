@@ -1,100 +1,135 @@
 {{>header}}
 
-<div class="w3-container w3-padding-64 w3-light-grey" style="display: flex; justify-content: center;">
-    <div class="w3-card-4 w3-white w3-round-large" style="width: 100%; max-width: 800px; overflow: hidden;">
+<div class="w3-container w3-padding-64" style="display: flex; justify-content: center; background-image: url('../public/assets/auth/fondo_registrarse.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">    <div class="w3-card-4 w3-white w3-round-xlarge" style="width: 100%; max-width: 850px; overflow: hidden; border-radius: 16px;">
 
-        <header class="w3-container w3-teal w3-center w3-padding-24">
-            <h2 class="w3-xxlarge"><b>PREGUNTADOS</b></h2>
-            <h3>Crea tu cuenta</h3>
-            <p class="w3-opacity">Únete y empieza a desafiar tu conocimiento</p>
-        </header>
+        <header class="w3-container w3-white w3-center w3-padding-32" style="border-bottom: 1px solid #f0f0f0;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
+                        <img src="../public/assets/auth/preguntados_logo_blanco.png" alt="Logo Preguntados" style="width: 50px; height: auto;">
+                        <h2 class="w3-xlarge" style="color: #0c1a30; font-weight: 800; letter-spacing: 1px; margin: 0;"><b>PREGUNTADOS</b></h2>
+                    </div>
+                    <h3 class="w3-large" style="color: #0c1a30; font-weight: bold; margin-top: 8px;">Crea tu cuenta</h3>
+                    <p class="w3-text-grey w3-small" style="margin: 4px 0 0 0;">Únete y empieza a desafiar tu conocimiento</p>
+                </header>
 
-        <form action="/usuario/procesar" method="POST" enctype="multipart/form-data" class="w3-container w3-padding-24">
+        <form action="/usuario/procesar" method="POST" enctype="multipart/form-data" class="w3-container w3-padding-24" style="color: #0c1a30;">
 
-            <div class="w3-container w3-border-bottom w3-border-light-grey w3-padding-16">
-                <h4 class="w3-text-teal"><i class="fa fa-user w3-margin-right"></i><b>Información personal</b></h4>
+            <div class="w3-container w3-padding-16">
+                <h4 style="font-weight: bold; color: #0c1a30; display: flex; align-items: center;">
+                    <span class="w3-circle w3-blue w3-center" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; margin-right: 12px;">
+                        <i class="fa fa-user" style="font-size: 16px;"></i>
+                    </span>
+                    Información personal
+                </h4>
 
-                <div class="w3-row-padding" style="margin:0 -16px;">
+                <div class="w3-row-padding" style="margin:0 -16px; margin-top: 16px;">
                     <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Nombre completo</b></label>
-                        <input class="w3-input w3-border w3-round" type="text" name="nombre" placeholder="Ingresa tu nombre completo" required>
+                        <label class="w3-text-grey w3-small"><b>Nombre completo</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="nombre" placeholder="Ingresa tu nombre completo" style="border-radius: 8px; padding: 10px;" required>
                     </div>
                     <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Año de nacimiento</b></label>
-                        <input class="w3-input w3-border w3-round" type="number" name="anio_nacimiento" placeholder="Selecciona tu año" min="1900" max="2026" required>
-                    </div>
+                                            <label class="w3-text-grey w3-small"><b>Año de nacimiento</b></label>
+                                            <select class="w3-select w3-border w3-round" name="anio_nacimiento" style="border-radius: 8px; padding: 10px; background: white;" required>
+                                                <option value="" disabled selected>Selecciona tu año</option>
+                                                {{#anios}}
+                                                    <option value="{{anio}}">{{anio}}</option>
+                                                {{/anios}}
+                                            </select>
+                                        </div>
                 </div>
 
                 <div class="w3-margin-top w3-margin-bottom">
-                    <label class="w3-text-gray"><b>Sexo</b></label>
-                    <div class="w3-row w3-margin-top">
-                        <div class="w3-col s4">
+                    <label class="w3-text-grey w3-small"><b>Sexo</b></label>
+                    <div class="w3-row w3-border w3-round w3-white" style="border-radius: 8px; margin-top: 8px; overflow: hidden;">
+                        <div class="w3-col s4 w3-padding w3-center style-radio" style="border-right: 1px solid #ddd;">
                             <input class="w3-radio" type="radio" name="sexo" value="Masculino" checked>
-                            <label> Masculino</label>
+                            <label class="w3-small"> Masculino</label>
                         </div>
-                        <div class="w3-col s4">
+                        <div class="w3-col s4 w3-padding w3-center style-radio" style="border-right: 1px solid #ddd;">
                             <input class="w3-radio" type="radio" name="sexo" value="Femenino">
-                            <label> Femenino</label>
+                            <label class="w3-small"> Femenino</label>
                         </div>
-                        <div class="w3-col s4">
+                        <div class="w3-col s4 w3-padding w3-center style-radio">
                             <input class="w3-radio" type="radio" name="sexo" value="Otro">
-                            <label> Prefiero no cargarlo</label>
+                            <label class="w3-small"> Prefiero no cargarlo</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="w3-row-padding" style="margin:0 -16px; margin-top:24px;">
                     <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>País</b></label>
-                        <input class="w3-input w3-border w3-round" type="text" name="pais" placeholder="Selecciona tu país" required>
+                        <label class="w3-text-grey w3-small"><b>País</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="pais" placeholder="Selecciona tu país" style="border-radius: 8px; padding: 10px;" required>
                     </div>
                     <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Ciudad</b></label>
-                        <input class="w3-input w3-border w3-round" type="text" name="ciudad" placeholder="Selecciona tu ciudad" required>
+                        <label class="w3-text-grey w3-small"><b>Ciudad</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="ciudad" placeholder="Selecciona tu ciudad" style="border-radius: 8px; padding: 10px;" required>
                     </div>
                 </div>
             </div>
 
-            <div class="w3-container w3-border-bottom w3-border-light-grey w3-padding-16">
-                <h4 class="w3-text-teal"><i class="fa fa-envelope w3-margin-right"></i><b>Información de cuenta</b></h4>
-
-                <div class="w3-row-padding" style="margin:0 -16px;">
-                    <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Email</b></label>
-                        <input class="w3-input w3-border w3-round" type="email" name="email" placeholder="ejemplo@correo.com" required>
-                    </div>
-                    <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Nombre de usuario</b></label>
-                        <input class="w3-input w3-border w3-round" type="text" name="username" placeholder="Elige tu nombre de usuario" required>
-                    </div>
-                </div>
-
-                <div class="w3-row-padding" style="margin:0 -16px;">
-                    <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Contraseña</b></label>
-                        <input class="w3-input w3-border w3-round" type="password" name="password" placeholder="Crea una contraseña" required>
-                        <small class="w3-text-grey">La contraseña debe tener al menos 6 caracteres.</small>
-                    </div>
-                    <div class="w3-half w3-margin-bottom">
-                        <label class="w3-text-gray"><b>Repetir contraseña</b></label>
-                        <input class="w3-input w3-border w3-round" type="password" name="password_repeat" placeholder="Repite tu contraseña" required>
-                    </div>
-                </div>
-            </div>
+            <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 24px 0;">
 
             <div class="w3-container w3-padding-16">
-                <h4 class="w3-text-teal"><i class="fa fa-camera w3-margin-right"></i><b>Foto de perfil</b></h4>
-                <div class="w3-padding-16 w3-center w3-light-grey w3-round" style="border: 2px dashed #ccc;">
-                    <input type="file" name="avatar" accept="image/*" class="w3-input" style="border:none; background:transparent;" required>
-                    <p class="w3-small w3-text-grey w3-margin-top">JPG, PNG o GIF. Máx. 5MB</p>
+                <h4 style="font-weight: bold; color: #0c1a30; display: flex; align-items: center;">
+                    <span class="w3-circle w3-blue w3-center" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; margin-right: 12px;">
+                        <i class="fa fa-envelope" style="font-size: 14px;"></i>
+                    </span>
+                    Información de cuenta
+                </h4>
+
+                <div class="w3-row-padding" style="margin:0 -16px; margin-top: 16px;">
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-grey w3-small"><b>Email</b></label>
+                        <input class="w3-input w3-border w3-round" type="email" name="email" placeholder="ejemplo@correo.com" style="border-radius: 8px; padding: 10px;" required>
+                    </div>
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-grey w3-small"><b>Nombre de usuario</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="username" placeholder="Elige tu nombre de usuario" style="border-radius: 8px; padding: 10px;" required>
+                    </div>
+                </div>
+
+                <div class="w3-row-padding" style="margin:0 -16px;">
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-grey w3-small"><b>Contraseña</b></label>
+                        <input class="w3-input w3-border w3-round" type="password" name="password" placeholder="Crea una contraseña" style="border-radius: 8px; padding: 10px;" required>
+                        <small class="w3-text-grey w3-tiny" style="display:block; margin-top:4px;">La contraseña debe tener al menos 6 caracteres.</small>
+                    </div>
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-grey w3-small"><b>Repetir contraseña</b></label>
+                        <input class="w3-input w3-border w3-round" type="password" name="password_repeat" placeholder="Repite tu contraseña" style="border-radius: 8px; padding: 10px;" required>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #f0f0f0; margin: 24px 0;">
+
+            <div class="w3-container w3-padding-16">
+                <h4 style="font-weight: bold; color: #0c1a30; display: flex; align-items: center;">
+                    <span class="w3-circle w3-blue w3-center" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; margin-right: 12px;">
+                        <i class="fa fa-camera" style="font-size: 14px;"></i>
+                    </span>
+                    Foto de perfil
+                </h4>
+
+                <div style="display: flex; align-items: center; margin-top: 16px; gap: 20px;">
+                    <div class="w3-light-grey w3-circle w3-center" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #e0e0e0 !important;">
+                        <i class="fa fa-user w3-text-grey" style="font-size: 40px;"></i>
+                    </div>
+                    <div>
+                        <label class="w3-button w3-white w3-border w3-round" style="border-radius: 8px; font-weight: bold; border: 1px solid #ccc !important;">
+                            <i class="fa fa-upload w3-margin-right"></i> Seleccionar imagen
+                            <input type="file" name="avatar" accept="image/*" style="display: none;" required>
+                        </label>
+                        <p class="w3-tiny w3-text-grey" style="margin: 8px 0 0 0;">JPG, PNG o GIF. Máx. 5MB</p>
+                    </div>
                 </div>
             </div>
 
             <div class="w3-padding-24">
-                <button type="submit" class="w3-button w3-block w3-teal w3-hover-green w3-large w3-round-large">
-                    <b>Registrarme</b>
+                <button type="submit" class="w3-button w3-block w3-round-large w3-large" style="background-color: #00b274; color: white; font-weight: bold; border-radius: 12px; padding: 12px 0;">
+                    Registrarme
                 </button>
-                <p class="w3-center w3-margin-top">¿Ya tienes cuenta? <a href="/usuario/login" class="w3-text-teal">Inicia sesión</a></p>
+                <p class="w3-center w3-small" style="margin-top: 16px;">¿Ya tienes cuenta? <a href="/usuario/login" style="color: #00b274; font-weight: bold; text-decoration: none;">Inicia sesión</a></p>
             </div>
 
         </form>
