@@ -57,4 +57,17 @@ class Configurator
   {
     return new DatabaseModel($this->getDatabase());
   }
+
+  public function getUsuarioController()
+  {
+      return new UsuarioController($this->getUsuarioModel(), $this->getRenderer(), new Request(),new ImageService());
+  }
+
+  public function getUsuarioModel()
+  {
+      return new UsuarioModel($this->getDatabase());
+  }
+
+
+
 }

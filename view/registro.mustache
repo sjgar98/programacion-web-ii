@@ -1,0 +1,104 @@
+{{>header}}
+
+<div class="w3-container w3-padding-64 w3-light-grey" style="display: flex; justify-content: center;">
+    <div class="w3-card-4 w3-white w3-round-large" style="width: 100%; max-width: 800px; overflow: hidden;">
+
+        <header class="w3-container w3-teal w3-center w3-padding-24">
+            <h2 class="w3-xxlarge"><b>PREGUNTADOS</b></h2>
+            <h3>Crea tu cuenta</h3>
+            <p class="w3-opacity">Únete y empieza a desafiar tu conocimiento</p>
+        </header>
+
+        <form action="/usuario/procesar" method="POST" enctype="multipart/form-data" class="w3-container w3-padding-24">
+
+            <div class="w3-container w3-border-bottom w3-border-light-grey w3-padding-16">
+                <h4 class="w3-text-teal"><i class="fa fa-user w3-margin-right"></i><b>Información personal</b></h4>
+
+                <div class="w3-row-padding" style="margin:0 -16px;">
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Nombre completo</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="nombre" placeholder="Ingresa tu nombre completo" required>
+                    </div>
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Año de nacimiento</b></label>
+                        <input class="w3-input w3-border w3-round" type="number" name="anio_nacimiento" placeholder="Selecciona tu año" min="1900" max="2026" required>
+                    </div>
+                </div>
+
+                <div class="w3-margin-top w3-margin-bottom">
+                    <label class="w3-text-gray"><b>Sexo</b></label>
+                    <div class="w3-row w3-margin-top">
+                        <div class="w3-col s4">
+                            <input class="w3-radio" type="radio" name="sexo" value="Masculino" checked>
+                            <label> Masculino</label>
+                        </div>
+                        <div class="w3-col s4">
+                            <input class="w3-radio" type="radio" name="sexo" value="Femenino">
+                            <label> Femenino</label>
+                        </div>
+                        <div class="w3-col s4">
+                            <input class="w3-radio" type="radio" name="sexo" value="Otro">
+                            <label> Prefiero no cargarlo</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-row-padding" style="margin:0 -16px; margin-top:24px;">
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>País</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="pais" placeholder="Selecciona tu país" required>
+                    </div>
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Ciudad</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="ciudad" placeholder="Selecciona tu ciudad" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w3-container w3-border-bottom w3-border-light-grey w3-padding-16">
+                <h4 class="w3-text-teal"><i class="fa fa-envelope w3-margin-right"></i><b>Información de cuenta</b></h4>
+
+                <div class="w3-row-padding" style="margin:0 -16px;">
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Email</b></label>
+                        <input class="w3-input w3-border w3-round" type="email" name="email" placeholder="ejemplo@correo.com" required>
+                    </div>
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Nombre de usuario</b></label>
+                        <input class="w3-input w3-border w3-round" type="text" name="username" placeholder="Elige tu nombre de usuario" required>
+                    </div>
+                </div>
+
+                <div class="w3-row-padding" style="margin:0 -16px;">
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Contraseña</b></label>
+                        <input class="w3-input w3-border w3-round" type="password" name="password" placeholder="Crea una contraseña" required>
+                        <small class="w3-text-grey">La contraseña debe tener al menos 6 caracteres.</small>
+                    </div>
+                    <div class="w3-half w3-margin-bottom">
+                        <label class="w3-text-gray"><b>Repetir contraseña</b></label>
+                        <input class="w3-input w3-border w3-round" type="password" name="password_repeat" placeholder="Repite tu contraseña" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w3-container w3-padding-16">
+                <h4 class="w3-text-teal"><i class="fa fa-camera w3-margin-right"></i><b>Foto de perfil</b></h4>
+                <div class="w3-padding-16 w3-center w3-light-grey w3-round" style="border: 2px dashed #ccc;">
+                    <input type="file" name="avatar" accept="image/*" class="w3-input" style="border:none; background:transparent;" required>
+                    <p class="w3-small w3-text-grey w3-margin-top">JPG, PNG o GIF. Máx. 5MB</p>
+                </div>
+            </div>
+
+            <div class="w3-padding-24">
+                <button type="submit" class="w3-button w3-block w3-teal w3-hover-green w3-large w3-round-large">
+                    <b>Registrarme</b>
+                </button>
+                <p class="w3-center w3-margin-top">¿Ya tienes cuenta? <a href="/usuario/login" class="w3-text-teal">Inicia sesión</a></p>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{{>footer}}
