@@ -11,7 +11,7 @@ class DatabaseController
 
   public function migrar()
   {
-    if ($_SERVER['REMOTE_ADDR'] != "127.0.0.1" && $_SERVER['REMOTE_ADDR'] != "172.19.0.1") {
+    if (!Utils::isRequestFromNetwork("127.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12")) {
       Log::warning("Acceso no autorizado desde " . $_SERVER['REMOTE_ADDR']);
       http_response_code(401);
       die();
