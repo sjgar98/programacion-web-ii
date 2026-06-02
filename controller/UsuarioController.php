@@ -52,10 +52,34 @@ class UsuarioController
             $nombreFoto = "default.png";
         }
 
-        Log::info("");
-        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento, $sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto);
-        Redirect::toIndex();
+        $token = bin2hex(random_bytes(16));
+        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token);
 
+        echo "<h2>¡Registro exitoso!</h2>";
+        echo "<p>Para activar tu cuenta en esta primera versión de desarrollo, hacé clic en el siguiente enlace:</p>";
+        echo "<a href='/usuario/validar?token=" . $token . "'>Activar mi cuenta (Simulación Mail)</a>";
+
+//        Log::info("");
+//        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento, $sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto);
+//        Redirect::toIndex();
+    }
+
+    public function validar(){
+        $token = $this->request->get('token');
+
+        if(empty($token)){
+            throw new InvalidArgumentException("Token de validación no suministrado");
+        }
+
+        $usuario_id = $this->model->buscarUsuarioPorToken($token);
+
+        if ($usuario_id === null) {
+            throw new InvalidArgumentException("El enlace de validación es inválido o ya expiró.");
+        }
+
+        $this->model->activarUsuario($usuario_id);
+
+        Redirect::toIndex();
     }
 
 

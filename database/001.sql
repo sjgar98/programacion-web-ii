@@ -86,3 +86,8 @@ CREATE TABLE reportes (
   FOREIGN KEY (jugador_id) REFERENCES usuarios(id) ON DELETE CASCADE,
   FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE
 );
+
+ALTER TABLE usuarios (
+    ADD token_validacion VARCHAR(64) NULL,
+    ADD activo TINYINT DEFAULT 0
+);

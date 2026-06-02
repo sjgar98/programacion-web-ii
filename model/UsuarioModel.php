@@ -8,15 +8,15 @@ class UsuarioModel
         $this->database = $database;
     }
 
-    public function crearNuevoUsuario($nombre,$anio_nacimiento,$sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto)
+    public function crearNuevoUsuario($nombre,$anio_nacimiento,$sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto,$token)
     {
         $contrasenia_hash = password_hash($password, PASSWORD_DEFAULT);
 
         $apellido_ficticio = $nombre;
         $rol_jugador = 3;
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, pais, ciudad, username, password_hash, email, avatar, rol_id) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         Log::info("SQL: $sql");
         return $this->database->execute($sql,[$nombre,
             $apellido_ficticio,
@@ -27,7 +27,26 @@ class UsuarioModel
             $contrasenia_hash,
             $email,
             $nombreFoto,
-            $rol_jugador]);
+            $rol_jugador,
+            $token]);
+    }
+
+    public function buscarUsuarioPorToken($token)
+    {
+        $sql = "SELECT id FROM usuarios WHERE token_validacion = ?";
+        $resultado = $this->database->query($sql, [$token]);
+
+        if (!empty($resultado) && isset($resultado[0]['id'])) {
+            return $resultado[0]['id'];
+        }
+
+        return null;
+    }
+
+    public function activarUsuario($id)
+    {
+        $sql = "UPDATE usuarios SET activo = 1, token_validacion = NULL WHERE id = ?";
+        return $this->database->execute($sql, [$id]);
     }
 
 }
