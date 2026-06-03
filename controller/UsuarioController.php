@@ -24,7 +24,10 @@ class UsuarioController
             $anios[] = ['anio' => $i];
         }
 
-        $this->renderer->render("registro.mustache", ["anios" => $anios]);
+        $this->renderer->render("registro.mustache", [
+            "anios" => $anios,
+            "estilos_especificos" => '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />'
+        ]);
     }
 
     public function procesar()
@@ -39,6 +42,8 @@ class UsuarioController
         $password = $this->request->post('password');
         $password_repeat = $this->request->post('password_repeat');
         $nombreFoto = $this->imageService->procesar_imagen($_FILES['avatar']);
+        $latitud = $this->request->post('latitud');
+        $longitud = $this->request->post('longitud');
 
         if (empty($username) || empty($email) || empty($password)) {
             throw new InvalidArgumentException("Faltan campos obligatorios");
@@ -53,15 +58,11 @@ class UsuarioController
         }
 
         $token = bin2hex(random_bytes(16));
-        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token);
+        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token,$latitud,$longitud);
 
         echo "<h2>¡Registro exitoso!</h2>";
         echo "<p>Para activar tu cuenta en esta primera versión de desarrollo, hacé clic en el siguiente enlace:</p>";
         echo "<a href='/usuario/validar?token=" . $token . "'>Activar mi cuenta (Simulación Mail)</a>";
-
-//        Log::info("");
-//        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento, $sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto);
-//        Redirect::toIndex();
     }
 
     public function validar(){

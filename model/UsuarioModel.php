@@ -8,15 +8,15 @@ class UsuarioModel
         $this->database = $database;
     }
 
-    public function crearNuevoUsuario($nombre,$anio_nacimiento,$sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto,$token)
+    public function crearNuevoUsuario($nombre,$anio_nacimiento,$sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto,$token,$latitud,$longitud)
     {
         $contrasenia_hash = password_hash($password, PASSWORD_DEFAULT);
 
         $apellido_ficticio = $nombre;
         $rol_jugador = 3;
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion,latitud, longitud) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
         Log::info("SQL: $sql");
         return $this->database->execute($sql,[$nombre,
             $apellido_ficticio,
@@ -28,7 +28,9 @@ class UsuarioModel
             $email,
             $nombreFoto,
             $rol_jugador,
-            $token]);
+            $token,
+            $latitud,
+            $longitud]);
     }
 
     public function buscarUsuarioPorToken($token)
