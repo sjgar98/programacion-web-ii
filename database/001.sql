@@ -21,6 +21,10 @@ CREATE TABLE usuarios (
   email VARCHAR(255) NOT NULL,
   avatar VARCHAR(255) NOT NULL,
   rol_id INT NOT NULL,
+  token_validacion VARCHAR(64) NULL,
+  activo TINYINT DEFAULT 0,
+  latitud DECIMAL(10, 8) NULL,
+  longitud DECIMAL(11, 8) NULL,
   FOREIGN KEY (rol_id) REFERENCES roles(id)
 );
 
@@ -85,9 +89,4 @@ CREATE TABLE reportes (
   resuelto TINYINT NOT NULL DEFAULT 0,
   FOREIGN KEY (jugador_id) REFERENCES usuarios(id) ON DELETE CASCADE,
   FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE
-);
-
-ALTER TABLE usuarios (
-    ADD token_validacion VARCHAR(64) NULL,
-    ADD activo TINYINT DEFAULT 0
 );

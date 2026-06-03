@@ -60,9 +60,9 @@ class UsuarioController
         $token = bin2hex(random_bytes(16));
         $this->model->crearNuevoUsuario($nombre, $anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token,$latitud,$longitud);
 
-        echo "<h2>¡Registro exitoso!</h2>";
-        echo "<p>Para activar tu cuenta en esta primera versión de desarrollo, hacé clic en el siguiente enlace:</p>";
-        echo "<a href='/usuario/validar?token=" . $token . "'>Activar mi cuenta (Simulación Mail)</a>";
+        $this->renderer->render("registroExitoso.mustache", [
+            "token" => $token
+        ]);
     }
 
     public function validar(){
