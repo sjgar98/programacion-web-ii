@@ -55,7 +55,7 @@ class UsuarioController
         }
 
         if ($nombreFoto === null) {
-            $nombreFoto = "default.png";
+            $nombreFoto = "default.webp";
         }
 
         $token = bin2hex(random_bytes(16));

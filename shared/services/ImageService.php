@@ -4,7 +4,7 @@ class ImageService
 {
     function procesar_imagen($archivo) {
 
-        $nombre_final = 'default.png';
+        $nombre_final = 'default.webp';
         $errores = [];
 
         if (isset($archivo) && $archivo['error'] === UPLOAD_ERR_OK) {
@@ -41,7 +41,7 @@ class ImageService
                 $destino_completo = $carpeta_destino . $nombre_final;
 
                 if (!move_uploaded_file($fileTmpPath, $destino_completo)) {
-                    $nombre_final = 'default.png';
+                    $nombre_final = 'default.webp';
                 }
 
             } else{
