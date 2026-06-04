@@ -27,7 +27,7 @@ class UsuarioController
         $this->renderer->render("registro.mustache", [
             "anios" => $anios,
             "ocultar_header" => true,
-            "estilos_especificos" => array('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', 'https://www.w3schools.com/w3css/4/w3.css')
+            "estilos_especificos" => array('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')
         ]);
     }
 
