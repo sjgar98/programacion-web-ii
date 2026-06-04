@@ -1,0 +1,33 @@
+{{>header}}
+<main>
+  <h1>Vista de Preguntas</h1>
+
+  <h2>Pregunta 1</h2>
+  
+  {{#pregunta}}
+  <div>
+    <p>{{enunciado}}</p> 
+  </div>
+  {{/pregunta}}
+
+  {{^pregunta}}
+    <p>No se encontró la pregunta.</p>
+  {{/pregunta}}
+
+  <div>
+ <h3>Elegi una Respuesta</h3>
+  {{#respuesta}}
+  <form action="" method="POST">
+   
+   <button type="submit" value="{{es_correcta}}">
+    <div>
+    <p>{{texto}}</p> 
+     </div>
+  </button>
+ </form>
+
+  {{/respuesta}}
+</div>
+
+</main>
+{{>footer}}

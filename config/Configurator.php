@@ -64,14 +64,33 @@ class Configurator
 
   public function getUsuarioController()
   {
-      return new UsuarioController($this->getUsuarioModel(), $this->getRenderer(), new Request(),new ImageService());
+    return new UsuarioController($this->getUsuarioModel(), $this->getRenderer(), new Request(), new ImageService());
   }
 
   public function getUsuarioModel()
   {
-      return new UsuarioModel($this->getDatabase());
+    return new UsuarioModel($this->getDatabase());
   }
 
+  //
 
+  public function getPreguntasModel()
+  {
+    return new PreguntasModel($this->getDatabase(), $this->getRandom());
+  }
+  public function getRespuestasModel()
+  {
+    return new RespuestasModel($this->getDatabase(), $this->getRandom());
+  }
 
+  public function getRandom()
+  {
+    return new Random($this->getDatabase());
+  }
+
+  public function getPreguntasController()
+  { {
+      return new PreguntasController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getRespuestasModel());
+    }
+  }
 }
