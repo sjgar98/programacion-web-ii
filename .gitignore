@@ -1,1 +1,10 @@
-shared/log/*
+# Ignorar carpetas de IDE
+.idea/
+.vscode/
+
+# Ignorar logs
+shared/log/
+
+# Ignorar avatars cargados salvo default
+public/avatars/*
+!public/avatars/default.webp

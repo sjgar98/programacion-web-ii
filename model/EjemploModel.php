@@ -11,7 +11,7 @@ class EjemploModel
 
   public function getAllElementos()
   {
-    $sql = "SELECT * FROM usuario";
+    $sql = "SELECT * FROM usuarios";
     Log::info("SQL : $sql");
     return $this->database->query($sql);
   }
