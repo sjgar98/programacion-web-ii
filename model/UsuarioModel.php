@@ -14,7 +14,7 @@ class UsuarioModel
         $rol_jugador = 3;
 
         $sql = "INSERT INTO usuarios (nombre, apellido, anio_nacimiento,sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion,latitud, longitud) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
         Log::info("SQL: $sql");
         return $this->database->execute($sql,[$nombre,
             $apellido,
