@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Ignorar todos los avatares subidos por usuarios
+public/avatars/*
+# Excepto la foto por defecto para que no se rompa el diseño al clonar
+!public/avatars/default.png

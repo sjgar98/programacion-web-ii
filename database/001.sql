@@ -13,6 +13,7 @@ CREATE TABLE usuarios (
   fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   nombre VARCHAR(50) NOT NULL,
   apellido VARCHAR(50) NOT NULL,
+  anio_nacimiento INT NOT NULL,
   sexo VARCHAR(50) NOT NULL,
   pais VARCHAR(50) NOT NULL,
   ciudad VARCHAR(50) NOT NULL,
@@ -21,6 +22,10 @@ CREATE TABLE usuarios (
   email VARCHAR(255) NOT NULL,
   avatar VARCHAR(255) NOT NULL,
   rol_id INT NOT NULL,
+  token_validacion VARCHAR(64) NULL,
+  activo TINYINT DEFAULT 0,
+  latitud DECIMAL(10, 8) NULL,
+  longitud DECIMAL(11, 8) NULL,
   FOREIGN KEY (rol_id) REFERENCES roles(id)
 );
 
