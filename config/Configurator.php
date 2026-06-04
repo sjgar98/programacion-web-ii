@@ -72,6 +72,13 @@ class Configurator
       return new UsuarioModel($this->getDatabase());
   }
 
+  public function getPerfilController()
+  {
+      return new PerfilController($this->getPerfilModel(), $this->getRenderer(), new Request());
+  }
 
-
+  public function getPerfilModel()
+  {
+      return new PerfilModel($this->getDatabase());
+  }
 }
