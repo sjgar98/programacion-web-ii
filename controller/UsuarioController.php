@@ -33,6 +33,7 @@ class UsuarioController
     public function procesar()
     {
         $nombre = $this->request->post('nombre');
+        $apellido = $this->request->post('apellido');
         $anio_nacimiento = $this->request->post('anio_nacimiento');
         $sexo = $this->request->post('sexo');
         $pais = $this->request->post('pais');
@@ -45,7 +46,7 @@ class UsuarioController
         $latitud = $this->request->post('latitud');
         $longitud = $this->request->post('longitud');
 
-        if (empty($username) || empty($email) || empty($password)) {
+        if (empty($username) || empty($email) || empty($password) || empty($apellido)) {
             throw new InvalidArgumentException("Faltan campos obligatorios");
         }
 
@@ -58,7 +59,7 @@ class UsuarioController
         }
 
         $token = bin2hex(random_bytes(16));
-        $this->model->crearNuevoUsuario($nombre, $anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token,$latitud,$longitud);
+        $this->model->crearNuevoUsuario($nombre, $apellido,$anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token,$latitud,$longitud);
 
         $this->renderer->render("registroExitoso.mustache", [
             "token" => $token

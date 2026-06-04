@@ -13,6 +13,7 @@ CREATE TABLE usuarios (
   fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   nombre VARCHAR(50) NOT NULL,
   apellido VARCHAR(50) NOT NULL,
+  anio_nacimiento INT NOT NULL,
   sexo VARCHAR(50) NOT NULL,
   pais VARCHAR(50) NOT NULL,
   ciudad VARCHAR(50) NOT NULL,
