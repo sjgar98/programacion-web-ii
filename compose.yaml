@@ -10,6 +10,8 @@ services:
       - "net.ipv4.ip_unprivileged_port_start=0"
     ports:
       - "80:80"
+    environment:
+      PREGUNTADOS_AUTORUN_MIGRATIONS: "false"
     volumes:
       - ./:/var/www/html
     restart: unless-stopped

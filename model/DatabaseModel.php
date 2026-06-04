@@ -48,20 +48,17 @@ class DatabaseModel
       $migracion = array_find($migraciones, function ($migracion) use ($migracionArchivo) {
         return $migracion->migracion == $migracionArchivo;
       });
-      if ($migracion) {
-        echo "<div>La migración " . $migracion->migracion . " ya existe</div>";
-      } else {
+      if (!$migracion) {
         $migracionQuery = file_get_contents($this->migrationsDir . DIRECTORY_SEPARATOR . $migracionArchivo);
         $this->database->begin_transaction();
         try {
           $this->database->multi_query($migracionQuery);
           $this->database->execute("INSERT INTO migraciones (migracion) VALUES (\"$migracionArchivo\");");
           $this->database->commit_transaction();
-          Log::info("SQL : Ejecutada migracion $migracionArchivo");
-          echo "<div>Ejecutada migracion $migracionArchivo</div>";
+          Log::info("SQL : Ejecutada migración $migracionArchivo");
         } catch (Exception $exception) {
           $this->database->rollback_transaction();
-          Log::error("SQL : $exception");
+          Log::error("SQL : Falló migración $migracionArchivo : $exception");
           die("<div>$exception</div>");
         }
       }

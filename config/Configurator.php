@@ -6,6 +6,10 @@ class Configurator
   public function __construct()
   {
     $this->config = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . "config.ini");
+    if (getenv("PREGUNTADOS_AUTORUN_MIGRATIONS") == "true") {
+      $dbModel = $this->getDatabaseModel();
+      $dbModel->migrarDatabase();
+    }
   }
 
   private function getDatabase(): Database

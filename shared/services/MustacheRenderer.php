@@ -1,16 +1,14 @@
 <?php
-require_once(__DIR__ . '/../../vendor/mustache/src/Mustache/Autoloader.php');
 
 class MustacheRenderer implements Renderer
 {
-  private Mustache_Engine $mustache;
+  private \Mustache\Engine $mustache;
 
   public function __construct(string $viewsFolder)
   {
-    Mustache_Autoloader::register();
-    $this->mustache = new Mustache_Engine([
-      'loader'          => new Mustache_Loader_FilesystemLoader($viewsFolder),
-      'partials_loader' => new Mustache_Loader_FilesystemLoader($viewsFolder),
+    $this->mustache = new \Mustache\Engine([
+      'loader'          => new \Mustache\Loader\FilesystemLoader($viewsFolder),
+      'partials_loader' => new \Mustache\Loader\FilesystemLoader($viewsFolder),
     ]);
   }
 
