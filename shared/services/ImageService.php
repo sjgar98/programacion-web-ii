@@ -4,7 +4,7 @@ class ImageService
 {
     function procesar_imagen($archivo) {
 
-        $nombre_final = null;
+        $nombre_final = 'default.png';
         $errores = [];
 
         if (isset($archivo) && $archivo['error'] === UPLOAD_ERR_OK) {
@@ -37,18 +37,15 @@ class ImageService
                 }
 
                 $nombre_limpio = preg_replace("/[^a-zA-Z0-9.]/", "_", $fileName);
-
                 $nombre_final = time() . "_" . $nombre_limpio;
                 $destino_completo = $carpeta_destino . $nombre_final;
 
-
-
                 if (!move_uploaded_file($fileTmpPath, $destino_completo)) {
-
-                    $nombre_final = null;
-
+                    $nombre_final = 'default.png';
                 }
 
+            } else{
+                Log::info("Errores en la subida del avatar, se asignará la imagen por defecto.");
             }
 
         }
