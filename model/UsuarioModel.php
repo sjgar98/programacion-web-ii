@@ -4,11 +4,12 @@ class UsuarioModel
 {
     private Database $database;
 
-    public function __construct(Database $database){
+    public function __construct(Database $database)
+    {
         $this->database = $database;
     }
 
-    public function crearNuevoUsuario($nombre,$apellido,$anio_nacimiento,$sexo,$pais,$ciudad,$email,$username,$password,$nombreFoto,$token,$latitud,$longitud)
+    public function crearNuevoUsuario($nombre, $apellido, $anio_nacimiento, $sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token, $latitud, $longitud)
     {
         $contrasenia_hash = password_hash($password, PASSWORD_DEFAULT);
         $rol_jugador = 3;
@@ -16,7 +17,8 @@ class UsuarioModel
         $sql = "INSERT INTO usuarios (nombre, apellido, anio_nacimiento,sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion,latitud, longitud) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
         Log::info("SQL: $sql");
-        return $this->database->execute($sql,[$nombre,
+        return $this->database->execute($sql, [
+            $nombre,
             $apellido,
             $anio_nacimiento,
             $sexo,
@@ -29,7 +31,8 @@ class UsuarioModel
             $rol_jugador,
             $token,
             $latitud,
-            $longitud]);
+            $longitud
+        ]);
     }
 
     public function buscarUsuarioPorToken($token)
@@ -50,4 +53,11 @@ class UsuarioModel
         return $this->database->execute($sql, [$id]);
     }
 
+    public function buscarPorUsuario(string $username): ?array
+    {
+        $sql = "SELECT * FROM usuarios WHERE username = ? AND activo = true";
+        $resultado = $this->database->query($sql, [$username]);
+
+        return !empty($resultado) ? $resultado[0] : null;
+    }
 }

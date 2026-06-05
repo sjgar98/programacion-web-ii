@@ -93,4 +93,14 @@ class Configurator
       return new PreguntasController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getRespuestasModel());
     }
   }
+
+  public function getAuthService()
+  {
+    return new AuthService($this->getUsuarioModel());
+  }
+
+  public function getLoginController()
+  {
+    return new LoginController($this->getAuthService(), $this->getRenderer(), new Redirect(), new Request());
+  }
 }
