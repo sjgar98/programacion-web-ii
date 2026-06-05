@@ -99,6 +99,7 @@ class Configurator
   public function getLoginController()
   {
     return new LoginController($this->getAuthService(), $this->getRenderer(), new Redirect(), new Request());
+  }
 
   public function getPerfilController()
   {
