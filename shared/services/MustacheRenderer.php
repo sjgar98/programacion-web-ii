@@ -14,7 +14,11 @@ class MustacheRenderer implements Renderer
 
   public function render(string $viewName, array $data = []): void
   {
+    $extraData = array();
+    if ($_SESSION['usuario_loggeado']) {
+      $extraData[] = $_SESSION['usuario_loggeado'];
+    }
     $template = $this->mustache->loadTemplate($viewName);
-    echo $template->render($data);
+    echo $template->render(array_merge($data, $extraData));
   }
 }

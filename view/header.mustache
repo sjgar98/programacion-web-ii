@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Preguntados</title>
+    <link rel="icon" href="/public/assets/icon.png" />
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/global.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- https://fonts.google.com/icons -->
+    <!-- Ej: <mat-icon>settings</mat-icon> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 
     {{#estilos_especificos}}
     <link rel="stylesheet" href="{{.}}">
@@ -14,6 +17,38 @@
   </head>
   <body>
     {{^ocultar_header}}
-    <header>Test</header>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="/public/assets/icon.png" alt="Preguntados" width="30" height="30">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {{^usuario_loggeado}}
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/usuario">Registro</a>
+              </li>
+              {{/usuario_loggeado}}
+
+              {{#usuario_loggeado}}
+              <li class="nav-item">
+                <a class="nav-link" href="/">Lobby</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/perfil">Perfil</a>
+              </li>
+              {{/usuario_loggeado}}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
     {{/ocultar_header}}
     <main class="flex-grow-1 d-flex">
