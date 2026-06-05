@@ -1,12 +1,12 @@
 {{> header}}
 
 <div class="position-fixed top-0 start-0 vh-100 vw-100 d-flex align-items-center justify-content-center p-3" 
-     style="background: url('/programacion-web-ii/public/assets/fondo.png') no-repeat center center; background-size: cover; z-index: 9999;">
+     style="background: url('/public/assets/fondo.png') no-repeat center center; background-size: cover; z-index: 9999;">
     
     <div class="card border-0 shadow-lg p-4 bg-white rounded-4 w-100" style="max-width: 450px;">
         
         <div class="text-center mb-2">
-            <img src="/programacion-web-ii/public/assets/auth/preguntados_logo_blanco.png" alt="Logo Preguntados" class="img-fluid mb-2" style="max-height: 80px;">
+            <img src="/public/assets/auth/preguntados_logo_blanco.png" alt="Logo Preguntados" class="img-fluid mb-2" style="max-height: 80px;">
             <h1 class="text-dark m-0 pb-1" style="font-size: 2.3rem; font-weight: 900; letter-spacing: 0.5px;">PREGUNTADOS</h1>
             <h2 class="fw-bold text-dark mt-3 mb-1" style="font-size: 1.5rem;">Inicia sesión</h2>
             <p class="text-muted small px-2">Ingresa a tu cuenta y sigue desafiando tu conocimiento</p>
@@ -20,7 +20,7 @@
         </div>
         {{/error}}
 
-        <form action="/programacion-web-ii/login/procesarLogin" method="POST">
+        <form action="/login/procesarLogin" method="POST">
             
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-dark small mb-2">Nombre de usuario</label>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="text-end mb-4">
-                <a href="/programacion-web-ii/login/recuperar" class="text-decoration-none small fw-bold" style="color: #0084ff;">¿Olvidaste tu contraseña?</a>
+                <a href="/login/recuperar" class="text-decoration-none small fw-bold" style="color: #0084ff;">¿Olvidaste tu contraseña?</a>
             </div>
 
             <div class="d-grid mb-4">
@@ -48,7 +48,7 @@
             </div>
 
             <div class="text-center mt-2">
-                <span class="text-muted small">¿No tienes cuenta? <a href="/programacion-web-ii/usuario/verRegistro" class="text-decoration-none fw-bold" style="color: #0084ff;">Regístrate</a></span>
+                <span class="text-muted small">¿No tienes cuenta? <a href="/usuario/verRegistro" class="text-decoration-none fw-bold" style="color: #0084ff;">Regístrate</a></span>
             </div>
 
         </form>
