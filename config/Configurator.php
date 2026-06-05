@@ -72,8 +72,6 @@ class Configurator
     return new UsuarioModel($this->getDatabase());
   }
 
-  //
-
   public function getPreguntasModel()
   {
     return new PreguntasModel($this->getDatabase(), $this->getRandom());
@@ -89,9 +87,8 @@ class Configurator
   }
 
   public function getPreguntasController()
-  { {
-      return new PreguntasController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getRespuestasModel());
-    }
+  {
+    return new PreguntasController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getRespuestasModel());
   }
 
   public function getAuthService()
@@ -102,5 +99,14 @@ class Configurator
   public function getLoginController()
   {
     return new LoginController($this->getAuthService(), $this->getRenderer(), new Redirect(), new Request());
+
+  public function getPerfilController()
+  {
+      return new PerfilController($this->getPerfilModel(), $this->getRenderer(), new Request());
+  }
+
+  public function getPerfilModel()
+  {
+      return new PerfilModel($this->getDatabase());
   }
 }
