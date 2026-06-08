@@ -16,7 +16,7 @@ class MustacheRenderer implements Renderer
   {
     $extraData = array();
     if ($_SESSION['usuario_loggeado']) {
-      $extraData[] = $_SESSION['usuario_loggeado'];
+      $extraData['usuario_loggeado'] = $_SESSION['usuario_loggeado'];
     }
     $template = $this->mustache->loadTemplate($viewName);
     echo $template->render(array_merge($data, $extraData));
