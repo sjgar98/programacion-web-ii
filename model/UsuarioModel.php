@@ -53,11 +53,15 @@ class UsuarioModel
         return $this->database->execute($sql, [$id]);
     }
 
-    public function buscarPorUsuario(string $username): ?array
+    public function buscarUsuarioPorNombre(string $username): ?stdClass
     {
-        $sql = "SELECT * FROM usuarios WHERE username = ? AND activo = true";
-        $resultado = $this->database->query($sql, [$username]);
+        $sql = "SELECT * FROM usuarios WHERE username = ?";
+        $resultado = $this->database->query($sql, [$username], true);
+        return count($resultado) > 0 ? $resultado[0] : null;
+    }
 
-        return !empty($resultado) ? $resultado[0] : null;
+    public function validarLogin(stdClass $usuario, string $password): bool
+    {
+        return password_verify($password, $usuario->password_hash);
     }
 }

@@ -16,9 +16,8 @@ class PerfilController
   public function ver()
   {
     Log::info("PerfilController::ver");
-    // TODO: Session Management & Query Param Management
-    // $userId = $_SESSION['usuario_id'];
-    $userId = 1;
+    // TODO: Query Param Management
+    $userId = $_SESSION['usuario_loggeado']->id;
     $user = $this->model->getPerfilUsuario($userId);
     if ($user) {
       $this->renderer->render("verPerfilPropio", [
