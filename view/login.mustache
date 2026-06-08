@@ -1,0 +1,58 @@
+{{> header}}
+
+<div class="position-fixed top-0 start-0 vh-100 vw-100 d-flex align-items-center justify-content-center p-3" 
+     style="background: url('/public/assets/fondo.png') no-repeat center center; background-size: cover; z-index: 9999;">
+    
+    <div class="card border-0 shadow-lg p-4 bg-white rounded-4 w-100" style="max-width: 450px;">
+        
+        <div class="text-center mb-2">
+            <img src="/public/assets/auth/preguntados_logo_blanco.png" alt="Logo Preguntados" class="img-fluid mb-2" style="max-height: 80px;">
+            <h1 class="text-dark m-0 pb-1" style="font-size: 2.3rem; font-weight: 900; letter-spacing: 0.5px;">PREGUNTADOS</h1>
+            <h2 class="fw-bold text-dark mt-3 mb-1" style="font-size: 1.5rem;">Inicia sesión</h2>
+            <p class="text-muted small px-2">Ingresa a tu cuenta y sigue desafiando tu conocimiento</p>
+        </div>
+
+        <hr class="text-muted my-3 opacity-25">
+
+        {{#error}}
+        <div class="alert alert-danger alert-dismissible fade show rounded-3 mb-3 small" role="alert">
+            <i class="fa fa-exclamation-triangle me-2"></i> <strong>Error:</strong> {{error}}
+        </div>
+        {{/error}}
+
+        <form action="/login/procesarLogin" method="POST">
+            
+            <div class="mb-3">
+                <label for="username" class="form-label fw-bold text-dark small mb-2">Nombre de usuario</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa fa-user-o"></i></span>
+                    <input type="text" class="form-control border-start-0 bg-white shadow-none" name="username" id="username" placeholder="Ingresa tu nombre de usuario" required>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label for="pass" class="form-label fw-bold text-dark small mb-2">Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa fa-lock"></i></span>
+                    <input type="password" class="form-control border-start-0 border-end-0 bg-white shadow-none" name="pass" id="pass" placeholder="Ingresa tu contraseña" required>
+                    <span class="input-group-text bg-white border-start-0 text-muted" style="cursor: pointer;"><i class="fa fa-eye"></i></span>
+                </div>
+            </div>
+
+            <div class="text-end mb-4">
+                <a href="/login/recuperar" class="text-decoration-none small fw-bold" style="color: #0084ff;">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <div class="d-grid mb-4">
+                <button type="submit" class="btn btn-success fw-bold py-2 rounded-3 text-white border-0" style="background-color: #00a650;">Iniciar sesión</button>
+            </div>
+
+            <div class="text-center mt-2">
+                <span class="text-muted small">¿No tienes cuenta? <a href="/usuario/verRegistro" class="text-decoration-none fw-bold" style="color: #0084ff;">Regístrate</a></span>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{{> footer}}

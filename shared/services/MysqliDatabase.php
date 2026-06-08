@@ -9,6 +9,7 @@ class MysqliDatabase implements Database
     $this->conexion = new mysqli($hostname, $username, $password);
     $this->conexion->query("CREATE DATABASE IF NOT EXISTS $database;");
     $this->conexion->select_db($database);
+    $this->conexion->set_charset("utf8");
   }
 
   public function query(string $sql, array $params = [], bool $asObjects = false): array
