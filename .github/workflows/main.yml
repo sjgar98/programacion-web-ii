@@ -34,7 +34,7 @@ jobs:
         with:
           fail-if-changed: true
           files: |
-              *.sql
+            ./database/*.sql
 
       - name: Desplegar a Hosting
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
