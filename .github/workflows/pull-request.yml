@@ -1,0 +1,37 @@
+name: Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validar-pull-request:
+    name: Validar Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: mysqli
+          coverage: none
+          tools: composer
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Controlar sintaxis de PHP
+        uses: mlocati/check-php-syntax@v1
+        with:
+          directory: .
+          include: |
+            index.php
+          fail-on-warnings: true
+
+      - name: Prevenir cambios de SQL
+        id: changed-markdown-files
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        with:
+          files: |
+            database/*.sql

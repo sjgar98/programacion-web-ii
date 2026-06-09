@@ -6,7 +6,7 @@ class Configurator
   public function __construct()
   {
     $this->config = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . "config.ini");
-    if (getenv("PREGUNTADOS_AUTORUN_MIGRATIONS") == "true") {
+    if ($this->config['automigrate'] == "true") {
       $dbModel = $this->getDatabaseModel();
       $dbModel->migrarDatabase();
     }

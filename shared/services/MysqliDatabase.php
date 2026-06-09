@@ -6,9 +6,7 @@ class MysqliDatabase implements Database
 
   public function __construct(string $hostname, string $username, string $password, string $database)
   {
-    $this->conexion = new mysqli($hostname, $username, $password);
-    $this->conexion->query("CREATE DATABASE IF NOT EXISTS $database;");
-    $this->conexion->select_db($database);
+    $this->conexion = new mysqli($hostname, $username, $password, $database);
     $this->conexion->set_charset("utf8");
   }
 
