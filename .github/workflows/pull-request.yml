@@ -1,13 +1,13 @@
-name: Deployment
+name: Pull Requests
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
 jobs:
-  deployment:
-    name: Deployment
+  validar-pull-request:
+    name: Validar Pull Request
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
@@ -35,17 +35,3 @@ jobs:
         with:
           files: |
             database/*.sql
-
-      - name: Desplegar a Hosting
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_HOSTNAME }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          dry-run: true
-          local-dir: ./
-          server-dir: ./htdocs/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            config.ini
