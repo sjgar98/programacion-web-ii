@@ -48,3 +48,15 @@ jobs:
             **/.git*
             **/.git*/**
             config.ini
+
+      - name: Buildear imagen de Docker y publicar en GHCR
+        uses: macbre/push-to-ghcr@master
+        with:
+          image_name: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          image_tag: latest
+
+      - name: Limpiar imagenes de Docker sin taggear
+        uses: dataaxiom/ghcr-cleanup-action@v1
+        with:
+          delete-untagged: true
