@@ -30,8 +30,8 @@ jobs:
           fail-on-warnings: true
 
       - name: Prevenir cambios de SQL
-        uses: tj-actions/verify-changed-files@a1c6acee9df209257a246f2cc6ae8cb6581c1edf
+        id: changed-markdown-files
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
-          fail-if-changed: true
           files: |
-            ./database/*.sql
+            database/*.sql
