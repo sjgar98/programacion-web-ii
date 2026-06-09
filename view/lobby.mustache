@@ -1,0 +1,129 @@
+{{> header}}
+
+<div class="container my-5">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="fw-bold text-dark">¡Bienvenido de vuelta, {{usuario.nombre}}!</h1>
+            <p class="text-muted">Listo para desafiar tu conocimiento</p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-12 col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center text-md-start" style="border-radius: 16px;">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <div class="text-warning mb-2 fs-4">
+                        <i class="bi bi-star-fill"></i> ⭐ <span class="text-muted small fw-medium">Tu puntaje total</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-primary my-1" style="color: #6f42c1 !important;">
+                        {{puntaje_total}}
+                    </h2>
+                    <p class="text-muted mb-0">puntos acumulados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card h-100 border-0 text-white p-4" style="background-color: #02E26D; border-radius: 16px;">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="fs-3 mb-2">🏆</div>
+                        <h4 class="fw-bold card-title">Nueva partida</h4>
+                        <p class="card-text small opacity-75">Desafía tus conocimientos con preguntas aleatorias de diversas categorías.</p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="/partida/crear" class="btn btn-light w-100 fw-bold text-success p-2" style="border-radius: 8px;">Crear partida</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card h-100 border-0 text-white p-4" style="background-color: #0085EE; border-radius: 16px;">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="fs-3 mb-2">📊</div>
+                        <h4 class="fw-bold card-title">Ver ranking</h4>
+                        <p class="card-text small opacity-75">Mirá los puntajes acumulados totales de todos los jugadores de la aplicación.</p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="/ranking" class="btn btn-light w-100 fw-bold text-primary p-2" style="border-radius: 8px;">Ir al ranking</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm p-4" style="border-radius: 16px;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="fs-4 me-2 text-secondary">⏱️</div>
+                        <div>
+                            <h4 class="fw-bold text-dark mb-0">Tus partidas</h4>
+                            <p class="text-muted small mb-0">Historial de tus últimas partidas disputadas</p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light text-secondary small text-uppercase">
+                                <tr>
+                                    <th scope="col" class="ps-3">Oponente</th>
+                                    <th scope="col">Resultado</th>
+                                    <th scope="col">Puntaje</th>
+                                    <th scope="col" class="text-end pe-3">Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#partidas}}
+                                <tr>
+                                    <td class="ps-3 fw-medium">
+                                        {{#oponente_nombre}}
+                                            <span class="text-dark">{{oponente_nombre}}</span>
+                                            <span class="text-muted d-block small">@{{oponente_username}}</span>
+                                        {{/oponente_nombre}}
+                                        {{^oponente_nombre}}
+                                            <span class="text-secondary italic">🤖 Modo Solitario</span>
+                                        {{/oponente_nombre}}
+                                    </td>
+                                    <td>
+                                        {{#completada}}
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">Finalizada</span>
+                                        {{/completada}}
+                                        {{^completada}}
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-pill">En Espera</span>
+                                        {{/completada}}
+                                    </td>
+                                    <td class="fw-bold text-dark fs-5">
+                                        {{puntaje}} <span class="fs-6 fw-normal text-muted">pts</span>
+                                    </td>
+                                    <td class="text-end pe-3">
+                                        <a href="/partida/detalle/id={{id}}" class="btn btn-sm btn-outline-secondary rounded-circle px-2 py-1">
+                                            👉
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/partidas}}
+
+                                {{^partidas}}
+                                <tr>
+                                    <td colspan="4" class="text-center py-5 text-muted">
+                                        <p class="mb-2 fs-5">¡Aún no tenés partidas registradas!</p>
+                                        <small class="d-block">Hacé clic en "Crear partida" arriba para empezar a sumar puntos.</small>
+                                    </td>
+                                </tr>
+                                {{/partidas}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{{> footer}}
