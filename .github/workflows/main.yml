@@ -36,7 +36,8 @@ jobs:
           files: |
             database/*.sql
 
-      - name: Desplegar a Hosting
+      - name: Desplegar a Hosting via FTP
+        if: ${{ secrets.FTP_PROTOCOL != 'sftp' }}
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           protocol: ${{ secrets.FTP_PROTOCOL }}
@@ -50,6 +51,19 @@ jobs:
             **/.git*
             **/.git*/**
             config.ini
+
+      - name: Desplegar a Hosting via SSH
+        if: ${{ secrets.FTP_PROTOCOL == 'sftp' }}
+        uses: wangyucode/sftp-upload-action@v3
+        with:
+          host: ${{ secrets.FTP_HOSTNAME }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          localDir: ./
+          remoteDir: ${{ secrets.FTP_SERVER_DIR }}
+          concurrency: 10
+          exclude: '**/.git*,**/.git*/**,**/config.ini'
 
       - name: Buildear imagen de Docker y publicar en GHCR
         uses: macbre/push-to-ghcr@master
