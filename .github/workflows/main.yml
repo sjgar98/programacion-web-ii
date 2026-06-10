@@ -39,6 +39,7 @@ jobs:
       - name: Desplegar a Hosting
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
+          protocol: ${{ secrets.FTP_PROTOCOL }}
           server: ${{ secrets.FTP_HOSTNAME }}
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
