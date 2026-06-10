@@ -6,8 +6,14 @@ class MysqliDatabase implements Database
 
   public function __construct(string $hostname, string $username, string $password, string $database)
   {
-    $this->conexion = new mysqli($hostname, $username, $password, $database);
-    $this->conexion->set_charset("utf8");
+    try {
+      $this->conexion = new mysqli($hostname, $username, $password, $database);
+      $this->conexion->set_charset("utf8");
+    } catch (mysqli_sql_exception $error) {
+      Log::error("SQL : " . $error);
+      http_response_code(500);
+      die();
+    }
   }
 
   public function query(string $sql, array $params = [], bool $asObjects = false): array
