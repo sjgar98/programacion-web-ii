@@ -16,13 +16,17 @@ class PerfilController
   public function ver()
   {
     Log::info("PerfilController::ver");
-    // TODO: Query Param Management
-    $userId = $_SESSION['usuario_loggeado']->id;
+    if ($this->request->get('userId')) {
+      $userId = $this->request->get('userId');
+    } else {
+      $userId = $_SESSION['usuario_loggeado']->id;
+    }
     $user = $this->model->getPerfilUsuario($userId);
     if ($user) {
       $this->renderer->render("verPerfilPropio", [
         "usuario" => $user,
-        "json" => json_encode($user),
+        "editable" => $user->id == $_SESSION['usuario_loggeado']->id,
+        "perfil_qr" => $this->model->getPerfilUsuarioQR($user->id),
         "estilos_especificos" => array('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')
       ]);
     } else {

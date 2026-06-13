@@ -19,4 +19,8 @@ class Utils
     }
     return false;
   }
+
+  public static function getBaseUrl(): string {
+    return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://" . $_SERVER['HTTP_HOST'];
+  }
 }
