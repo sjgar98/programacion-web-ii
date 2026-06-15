@@ -98,11 +98,23 @@ class Configurator
 
   public function getPerfilController()
   {
-      return new PerfilController($this->getPerfilModel(), $this->getRenderer(), new Request());
+    return new PerfilController($this->getPerfilModel(), $this->getRenderer(), new Request());
   }
 
   public function getPerfilModel()
   {
-      return new PerfilModel($this->getDatabase());
+    return new PerfilModel($this->getDatabase());
+  }
+
+  //
+
+  public function getPartidaModel()
+  {
+    return new PartidaModel($this->getDatabase());
+  }
+
+  public function getPartidaController()
+  {
+    return new PartidaController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getPartidaModel());
   }
 }
