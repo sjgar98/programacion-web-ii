@@ -105,4 +105,15 @@ class Configurator
   {
       return new PerfilModel($this->getDatabase());
   }
+
+  public function getLobbyController()
+  {
+      return new LobbyController($this->getLobbyModel(),$this->getRenderer(),new Request());
+  }
+
+  public function getLobbyModel()
+  {
+      return new LobbyModel($this->getDatabase());
+  }
+
 }
