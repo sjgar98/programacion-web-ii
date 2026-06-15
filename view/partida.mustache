@@ -1,0 +1,127 @@
+{{>header}}
+
+<div class="container py-5 d-flex flex-column justify-content-center align-items-center flex-grow-1">
+    
+    {{#error}}
+    <div class="row w-100 justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="alert alert-danger alert-dismissible fade show rounded-4 mb-4 shadow-sm small d-flex align-items-center" role="alert">
+                <i class="material-symbols-outlined me-2">exclamation</i>
+                <div><strong>Error:</strong> {{error}}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    {{/error}}
+
+    <div class="row w-100 justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+           <div class="progress mb-3 rounded-pill shadow-sm" style="height: 20px;">
+    <div id="timerBar" class="progress-bar bg-success progress-bar-striped progress-bar-animated fw-bold text-white" 
+         role="progressbar" style="width: 100%;">
+         <span id="timerText">{{tiempo_restante}}</span>
+    </div>
+</div>
+
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden text-center bg-white">
+                <div class="card-header bg-gradient bg-primary text-white py-3 border-0">
+                    <span class="badge bg-white text-primary rounded-pill px-3 py-2 fw-bold text-uppercase">
+                        ¡A Jugar!
+                    </span>
+                </div>
+
+                <div class="card-body p-4 p-sm-5">
+                    
+                    {{#pregunta}}
+                    <div class="mb-5">
+                        <h2 class="card-title fs-3 fw-bold text-dark lh-base">
+                            {{enunciado}}
+                        </h2>
+                    </div>
+                    {{/pregunta}}
+
+                    {{^pregunta}}
+                    <div class="py-4 text-muted">
+                        <i class="material-symbols-outlined display-4 text-warning mb-2">help_center</i>
+                        <p class="fs-5 fw-semibold">No se encontró la pregunta actual.</p>
+                    </div>
+                    {{/pregunta}}
+
+                    {{#pregunta}}
+                    <div>
+                        <form id="formPartida" action="/partida/verificarRespuesta" method="POST" class="d-grid gap-3">
+                            {{#respuesta}}
+                            <button type="submit" name="id_respuesta" value="{{id}}" 
+                                    class="btn btn-lg btn-outline-primary text-start py-3 px-4 rounded-pill shadow-sm fw-bold border-2 d-flex align-items-center">
+                                <span class="badge bg-primary-subtle text-primary rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+                                    ✓
+                                </span>
+                                <span class="text-wrap flex-grow-1 text-dark">{{texto}}</span>
+                            </button>
+                            {{/respuesta}}
+                        </form>
+                    </div>
+                    {{/pregunta}}
+
+                </div>
+                
+                <div class="card-footer bg-light py-3 border-0 text-muted small fw-medium">
+                    Partida en curso • El tiempo corre
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const tiempoBackend = "{{tiempo_restante}}";
+        let tiempoRestante = (tiempoBackend !== "") ? parseInt(tiempoBackend) : 60;
+        const totalTiempo = 60; 
+        
+        const timerBar = document.getElementById("timerBar");
+        const timerText = document.getElementById("timerText");
+        const formPartida = document.getElementById("formPartida");
+
+        if (!formPartida) return;
+
+        function actualizarBarra() {
+
+            if (tiempoRestante < 0) tiempoRestante = 0;
+            
+            timerText.textContent = tiempoRestante;
+            let porcentaje = (tiempoRestante / totalTiempo) * 100;
+            if (porcentaje < 0) porcentaje = 0;
+            timerBar.style.width = porcentaje + "%";
+
+            if (tiempoRestante <= 30 && tiempoRestante > 10) {
+                timerBar.classList.remove("bg-success");
+                timerBar.classList.add("bg-warning");
+                timerBar.classList.remove("text-white");
+                timerBar.classList.add("text-dark");
+            } else if (tiempoRestante <= 10) {
+                timerBar.classList.remove("bg-warning");
+                timerBar.classList.add("bg-danger");
+                timerBar.classList.remove("text-dark");
+                timerBar.classList.add("text-white");
+            }
+        }
+
+
+        actualizarBarra();
+
+        const cuentaRegresiva = setInterval(function () {
+            tiempoRestante--;
+            actualizarBarra();
+
+            if (tiempoRestante <= 0) {
+                clearInterval(cuentaRegresiva);
+                formPartida.submit(); 
+            }
+        }, 1000);
+    });
+</script>
+
+{{>footer}}
