@@ -1,13 +1,13 @@
 <?php
 
-class UsuarioController
+class RegistroController
 {
     private UsuarioModel $model;
     private Renderer $renderer;
     private Request $request;
     private ImageService $imageService;
 
-    public function __construct(UsuarioModel $model, Renderer $renderer, Request $request,ImageService $imageService)
+    public function __construct(UsuarioModel $model, Renderer $renderer, Request $request, ImageService $imageService)
     {
         $this->model = $model;
         $this->renderer = $renderer;
@@ -18,7 +18,7 @@ class UsuarioController
 
     public function ver()
     {
-        Log::info("UsuarioController::ver");
+        Log::info("RegistroController::ver");
         $anios = [];
         for ($i = 2026; $i >= 1930; $i--) {
             $anios[] = ['anio' => $i];
@@ -50,7 +50,7 @@ class UsuarioController
             throw new InvalidArgumentException("Faltan campos obligatorios");
         }
 
-        if($password != $password_repeat){
+        if ($password != $password_repeat) {
             throw new InvalidArgumentException("Las contraseñas no coinciden");
         }
 
@@ -59,17 +59,18 @@ class UsuarioController
         }
 
         $token = bin2hex(random_bytes(16));
-        $this->model->crearNuevoUsuario($nombre, $apellido,$anio_nacimiento,$sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token,$latitud,$longitud);
+        $this->model->crearNuevoUsuario($nombre, $apellido, $anio_nacimiento, $sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token, $latitud, $longitud);
 
         $this->renderer->render("registroExitoso.mustache", [
             "token" => $token
         ]);
     }
 
-    public function validar(){
+    public function validar()
+    {
         $token = $this->request->get('token');
 
-        if(empty($token)){
+        if (empty($token)) {
             throw new InvalidArgumentException("Token de validación no suministrado");
         }
 
@@ -83,6 +84,4 @@ class UsuarioController
 
         Redirect::toIndex();
     }
-
-
 }

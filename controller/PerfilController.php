@@ -18,8 +18,10 @@ class PerfilController
     Log::info("PerfilController::ver");
     if ($this->request->get('userId')) {
       $userId = $this->request->get('userId');
-    } else {
+    } elseif (isset($_SESSION['usuario_loggeado'])) {
       $userId = $_SESSION['usuario_loggeado']->id;
+    } else {
+      Redirect::toLogin();
     }
     $user = $this->model->getPerfilUsuario($userId);
     if ($user) {

@@ -143,16 +143,18 @@
         if (map.tap) map.tap.disable();
         document.getElementById('map').style.cursor = 'default';
 
-        const avatarPreview = document.getElementById("avatarPreview");
         const avatarInput = document.getElementById("avatar");
-        const avatarFilename = document.getElementById("avatarFilename");
-        avatarInput.addEventListener("change", (event) => {
-            const [file] = avatarInput.files;
-            if (file) {
-                avatarPreview.src = URL.createObjectURL(file);
-                avatarFilename.textContent = file.name;
-            }
-        });
+        if (avatarInput) {
+            const avatarPreview = document.getElementById("avatarPreview");
+            const avatarFilename = document.getElementById("avatarFilename");
+            avatarInput.addEventListener("change", (event) => {
+                const [file] = avatarInput.files;
+                if (file) {
+                    avatarPreview.src = URL.createObjectURL(file);
+                    avatarFilename.textContent = file.name;
+                }
+            });
+        }
     });
 </script>
 

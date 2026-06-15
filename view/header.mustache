@@ -34,7 +34,7 @@
                 <a class="nav-link" href="/login">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/usuario">Registro</a>
+                <a class="nav-link" href="/registro">Registro</a>
               </li>
               {{/usuario_loggeado}}
 
@@ -45,8 +45,17 @@
               <li class="nav-item">
                 <a class="nav-link" href="/perfil">Perfil</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/ranking">Ranking</a>
+              </li>
               {{/usuario_loggeado}}
             </ul>
+            {{#usuario_loggeado}}
+            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2">
+              <span class="d-none d-sm-inline">{{username}}</span>
+              <a class="btn btn-danger" href="/login/logout">Logout</a>
+            </div>
+            {{/usuario_loggeado}}
           </div>
         </div>
       </nav>

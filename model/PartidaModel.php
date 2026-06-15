@@ -69,7 +69,7 @@ class PartidaModel
 
     public function obtenerRespuestasPorPregunta($idPregunta)
     {
-        $sql = "SELECT * FROM respuestas WHERE pregunta_id = ?";
+        $sql = "SELECT * FROM respuestas WHERE pregunta_id = ? ORDER BY RAND()";
         return $this->database->query($sql, [$idPregunta], true);
     }
 
