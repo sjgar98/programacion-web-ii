@@ -36,6 +36,20 @@ jobs:
           files: |
             database/*.sql
 
+      - name: Actualizar config.ini
+        env:
+          DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+        run: |
+          echo "hostname='$DB_HOSTNAME'" > config/config.ini
+          echo "username='$DB_USERNAME'" >> config/config.ini
+          echo "password='$DB_PASSWORD'" >> config/config.ini
+          echo "database='$DB_DATABASE'" >> config/config.ini
+          echo "automigrate='true'" >> config/config.ini
+        shell: bash
+
       - name: Desplegar a Hosting via FTP
         if: ${{ vars.FTP_PROTOCOL != 'sftp' }}
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
