@@ -75,9 +75,10 @@ class PartidaModel
 
     public function establecerPartida()
     {
+        $idJugador = $_SESSION['usuario_loggeado']->id;
         if (empty($_SESSION['id_partida'])) {
             $sql = "INSERT INTO partidas (jugador_id, puntaje, completada) VALUES (?, 0, 0)";
-            $this->database->execute($sql, [1]);
+            $this->database->execute($sql, [$idJugador]);
 
             $sqlId = "SELECT LAST_INSERT_ID() as id";
             $resultadoId = $this->database->query($sqlId);
@@ -101,7 +102,7 @@ class PartidaModel
 
         $idPregunta = $_SESSION['pregunta']->id;
         $idPartida = $_SESSION['id_partida'];
-        $idJugador = 1;
+        $idJugador = $_SESSION['usuario_loggeado']->id;
 
 
         if ($idRespuestaElegida !== null) {
