@@ -6,7 +6,7 @@ class LobbyController
     private Renderer $renderer;
     private Request $request;
 
-    public function __construct(LobbyModel $model,Renderer $renderer,Request $request)
+    public function __construct(LobbyModel $model, Renderer $renderer, Request $request)
     {
         $this->model = $model;
         $this->renderer = $renderer;
@@ -15,8 +15,8 @@ class LobbyController
 
     public function ver()
     {
-        if(!isset($_SESSION['usuario_loggeado']) || empty($_SESSION['usuario_loggeado'])){
-            $this->redirectToIndex();
+        if (!isset($_SESSION['usuario_loggeado']) || empty($_SESSION['usuario_loggeado'])) {
+            Redirect::toLogin();
         }
 
         $usuarioObjeto = $_SESSION['usuario_loggeado'];
@@ -29,16 +29,10 @@ class LobbyController
         $usuario = !empty($datosUsuarioArray) ? $datosUsuarioArray[0] : null;
         $puntajeTotal = !empty($puntajeRankingArray) ? ($puntajeRankingArray[0]['puntaje_total'] ?? 0) : 0;
 
-        $this->renderer->render("lobby.mustache",[
+        $this->renderer->render("lobby.mustache", [
             "usuario" => $usuario,
             "puntaje_total" => $puntajeTotal,
             "partidas" => $historialPartidas
         ]);
-    }
-
-    public function redirectToIndex()
-    {
-        header("Location: /");
-        exit;
     }
 }

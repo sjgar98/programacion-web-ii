@@ -21,7 +21,7 @@ class LoginController
         $usuario = $this->model->buscarUsuarioPorNombre($username);
         if ($usuario && $this->model->validarLogin($usuario, $password)) {
             $_SESSION['usuario_loggeado'] = $usuario;
-            Redirect::to("/lobby");
+            Redirect::toIndex();
         } else {
             $this->renderer->render("login", ["error" => "Usuario o clave incorrectos"]);
         }
@@ -31,5 +31,11 @@ class LoginController
     {
         Log::info("LoginController::ver");
         $this->renderer->render("login", []);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['usuario_loggeado']);
+        Redirect::toLogin();
     }
 }

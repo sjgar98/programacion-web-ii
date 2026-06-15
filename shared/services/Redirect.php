@@ -12,4 +12,9 @@ class Redirect
   {
     self::to('/');
   }
+
+  public static function toLogin()
+  {
+    self::to('/login');
+  }
 }

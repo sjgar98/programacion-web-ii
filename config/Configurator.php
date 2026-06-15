@@ -39,17 +39,7 @@ class Configurator
 
   public function getRouter()
   {
-    return new Router($this, 'ejemplo', 'ver');
-  }
-
-  public function getEjemploController()
-  {
-    return new EjemploController($this->getEjemploModel(), $this->getRenderer(), new Request());
-  }
-
-  public function getEjemploModel()
-  {
-    return new EjemploModel($this->getDatabase());
+    return new Router($this, 'lobby', 'ver');
   }
 
   public function getDatabaseController()
@@ -62,9 +52,9 @@ class Configurator
     return new DatabaseModel($this->getDatabase());
   }
 
-  public function getUsuarioController()
+  public function getRegistroController()
   {
-    return new UsuarioController($this->getUsuarioModel(), $this->getRenderer(), new Request(), new ImageService());
+    return new RegistroController($this->getUsuarioModel(), $this->getRenderer(), new Request(), new ImageService());
   }
 
   public function getUsuarioModel()
@@ -106,8 +96,6 @@ class Configurator
     return new PerfilModel($this->getDatabase());
   }
 
-  //
-
   public function getPartidaModel()
   {
     return new PartidaModel($this->getDatabase());
@@ -120,12 +108,21 @@ class Configurator
 
   public function getLobbyController()
   {
-      return new LobbyController($this->getLobbyModel(),$this->getRenderer(),new Request());
+    return new LobbyController($this->getLobbyModel(), $this->getRenderer(), new Request());
   }
 
   public function getLobbyModel()
   {
-      return new LobbyModel($this->getDatabase());
+    return new LobbyModel($this->getDatabase());
   }
 
+  public function getRankingController()
+  {
+    return new RankingController($this->getRankingModel(), $this->getRenderer(), new Request());
+  }
+
+  public function getRankingModel()
+  {
+    return new RankingModel($this->getDatabase());
+  }
 }

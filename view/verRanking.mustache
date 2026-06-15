@@ -1,0 +1,41 @@
+{{>header}}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-xl-6">
+            <div class="card shadow container rounded-4 py-3 my-3">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <h1 class="fs-2 fw-bold align-content-center mt-2 mb-5">Top 5 Jugadores</h1>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Usuario</th>
+                          <th scope="col">Puntaje</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#usuarios_ranking}}
+                        <tr>
+                          <th scope="row">{{ranking}}</th>
+                          <td>
+                            <a href="/perfil?userId={{id}}">{{username}}</a>
+                          </td>
+                          <td>{{puntaje_total}}</td>
+                        </tr>
+                        {{/usuarios_ranking}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}

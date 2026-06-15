@@ -1,4 +1,3 @@
-
 <?php
 
 class PartidaController
@@ -19,9 +18,8 @@ class PartidaController
     {
 
         Log::info("PartidaController::ver");
-        if (empty($_SESSION['usuario_loggeado'])) {
-            Redirect::to("/lobby");
-            return;
+        if (!isset($_SESSION['usuario_loggeado'])) {
+            Redirect::toLogin();
         }
 
         $this->partidaModel->establecerPartida();
@@ -43,9 +41,8 @@ class PartidaController
     }
     public function verificarRespuesta()
     {
-        if (empty($_SESSION['usuario_loggeado'])) {
-            Redirect::to("/lobby");
-            return;
+        if (!isset($_SESSION['usuario_loggeado'])) {
+            Redirect::toIndex();
         }
 
         $idRespuesta = $_POST['id_respuesta'] ?? null;
@@ -57,24 +54,22 @@ class PartidaController
 
         if ($esTimeout || empty($idRespuesta)) {
             $this->partidaModel->reestabelecerPartida(false, null);
-            Redirect::to("/lobby");
-            return;
+            Redirect::toIndex();
         }
 
         $infoRespuesta = $this->partidaModel->obtenerRespuestaPorId((int)$idRespuesta);
 
         if (!$infoRespuesta) {
-            Redirect::to("/lobby");
-            return;
+            Redirect::toIndex();
         }
 
         $esCorrecta = ($infoRespuesta['es_correcta'] == 1);
         $this->partidaModel->reestabelecerPartida($esCorrecta, $idRespuesta);
 
         if ($esCorrecta) {
-            Redirect::to("/partida/ver");
+            Redirect::to("/partida");
         } else {
-            Redirect::to("/lobby");
+            Redirect::toIndex();
         }
     }
 }

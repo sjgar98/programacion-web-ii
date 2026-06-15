@@ -24,3 +24,7 @@ label:has(+ select[required])::after {
   color: red;
   margin-left: 2px;
 }
+
+.navbar-nav .nav-link.active {
+  font-weight: bold;
+}
