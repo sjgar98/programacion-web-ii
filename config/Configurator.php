@@ -117,4 +117,15 @@ class Configurator
   {
     return new PartidaController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getPartidaModel());
   }
+
+  public function getLobbyController()
+  {
+      return new LobbyController($this->getLobbyModel(),$this->getRenderer(),new Request());
+  }
+
+  public function getLobbyModel()
+  {
+      return new LobbyModel($this->getDatabase());
+  }
+
 }
