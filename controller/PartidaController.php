@@ -17,6 +17,10 @@ class PartidaController
     public function ver()
     {
         Log::info("PartidaController::ver");
+        if (empty($_SESSION['usuario_loggeado'])) {
+            Redirect::toIndex();
+            return;
+        }
 
         $this->partidaModel->establecerPartida();
 
@@ -37,6 +41,11 @@ class PartidaController
     }
     public function verificarRespuesta()
     {
+        if (empty($_SESSION['usuario_loggeado'])) {
+            Redirect::toIndex();
+            return;
+        }
+
         $idRespuesta = $_POST['id_respuesta'] ?? null;
 
         $esTimeout = false;
