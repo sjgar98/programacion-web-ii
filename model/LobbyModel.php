@@ -18,7 +18,12 @@ class LobbyModel
 
     public function obtenerHistorialPartidas($usuario_id)
     {
-        $obtenerHistorialSql = "SELECT * FROM partidas WHERE jugador_id = ?";
+        $obtenerHistorialSql = 
+            "SELECT *, DATE_FORMAT(fecha, '%d/%m/%y %H:%i') as fecha_formatted
+            FROM partidas
+            WHERE jugador_id = ?
+            ORDER BY fecha DESC
+            LIMIT 10;";
         Log::info("SQL: $obtenerHistorialSql");
         return $this->database->query($obtenerHistorialSql,[$usuario_id]);
     }
