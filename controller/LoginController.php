@@ -18,8 +18,12 @@ class LoginController
         $username = $this->request->post('username');
         $password = $this->request->post('pass');
 
+        Log::info($username . " " . $password);
+
         $usuario = $this->model->buscarUsuarioPorNombre($username);
+        Log::info(json_encode($usuario));
         if ($usuario && $this->model->validarLogin($usuario, $password)) {
+            Log::info("Validó");
             $_SESSION['usuario_loggeado'] = $usuario;
             Redirect::toIndex();
         } else {
