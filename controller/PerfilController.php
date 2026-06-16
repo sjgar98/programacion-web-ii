@@ -25,9 +25,11 @@ class PerfilController
     }
     $user = $this->model->getPerfilUsuario($userId);
     if ($user) {
+      $partidas = $this->model->getPerfilUsuarioUltimasPartidas($userId);
       $this->renderer->render("verPerfilPropio", [
         "usuario" => $user,
-        "editable" => $user->id == $_SESSION['usuario_loggeado']->id,
+        "partidas" => $partidas,
+        "propio" => $user->id == $_SESSION['usuario_loggeado']->id,
         "perfil_qr" => $this->model->getPerfilUsuarioQR($user->id),
         "estilos_especificos" => array('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')
       ]);
