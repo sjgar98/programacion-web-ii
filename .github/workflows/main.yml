@@ -66,18 +66,28 @@ jobs:
             **/.git*/**
             config.ini
 
-      - name: Desplegar a Hosting via SSH
+      - name: Desplegar a Hosting via SFTP
         if: ${{ vars.FTP_PROTOCOL == 'sftp' }}
-        uses: wangyucode/sftp-upload-action@v3
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
-          host: ${{ secrets.FTP_HOSTNAME }}
+          server: ${{ secrets.FTP_HOSTNAME }}
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: ./
-          remoteDir: ${{ secrets.FTP_SERVER_DIR }}
-          concurrency: 10
-          exclude: |
-            **/.git
-            **/.git/**
-            **/config.ini
+          sftp_only: true
+          local_path: ./*
+          remote_path: ${{ secrets.FTP_SERVER_DIR }}
+          sftpArgs: '-o ConnectTimeout=5'
+          rsyncArgs: '--exclude=.git --exclude=*.log'
+
+      # - name: Desplegar a Hosting via SSH
+      #   if: ${{ vars.FTP_PROTOCOL == 'sftp' }}
+      #   uses: wangyucode/sftp-upload-action@v3
+      #   with:
+      #     host: ${{ secrets.FTP_HOSTNAME }}
+      #     port: ${{ secrets.FTP_PORT }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     localDir: ./
+      #     remoteDir: ${{ secrets.FTP_SERVER_DIR }}
+      #     concurrency: 10
