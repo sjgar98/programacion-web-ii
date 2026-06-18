@@ -3,21 +3,25 @@
 class UsuarioModel
 {
     private Database $database;
+    private Mailer $mailer;
+    private Renderer $renderer;
 
-    public function __construct(Database $database)
+    public function __construct(Database $database, Mailer $mailer, Renderer $renderer)
     {
         $this->database = $database;
+        $this->mailer = $mailer;
+        $this->renderer = $renderer;
     }
 
-    public function crearNuevoUsuario($nombre, $apellido, $anio_nacimiento, $sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token, $latitud, $longitud)
+    public function crearNuevoUsuario(string $nombre, string $apellido, string $anio_nacimiento, string $sexo, string $pais, string $ciudad, string $email, string $username, string $password, string $nombreFoto, string $token, string $latitud, string $longitud): void
     {
         $contrasenia_hash = password_hash($password, PASSWORD_DEFAULT);
         $rol_jugador = 3;
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, anio_nacimiento,sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion,latitud, longitud) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
+        $sql = "INSERT INTO usuarios (nombre, apellido, anio_nacimiento, sexo, pais, ciudad, username, password_hash, email, avatar, rol_id,token_validacion,latitud, longitud) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Log::info("SQL: $sql");
-        return $this->database->execute($sql, [
+        $this->database->execute($sql, [
             $nombre,
             $apellido,
             $anio_nacimiento,
@@ -33,6 +37,19 @@ class UsuarioModel
             $latitud,
             $longitud
         ]);
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->mailer->sendEmail(
+                $email,
+                "Preguntados - Registro exitoso",
+                $this->renderer->render(
+                    "registroExitosoEmail.mustache",
+                    [
+                        "token" => $token
+                    ],
+                    false
+                )
+            );
+        }
     }
 
     public function buscarUsuarioPorToken($token)

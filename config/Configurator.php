@@ -6,7 +6,7 @@ class Configurator
   public function __construct()
   {
     $this->config = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . "config.ini");
-    if ($this->config['automigrate'] == "true") {
+    if ($this->config['db_automigrate'] == "true") {
       $dbModel = $this->getDatabaseModel();
       $dbModel->migrarDatabase();
     }
@@ -15,16 +15,26 @@ class Configurator
   private function getDatabase(): Database
   {
     return new MysqliDatabase(
-      $this->config['hostname'],
-      $this->config['username'],
-      $this->config['password'],
-      $this->config['database']
+      $this->config['db_hostname'],
+      $this->config['db_username'],
+      $this->config['db_password'],
+      $this->config['db_database']
     );
   }
 
   private function getRenderer(): Renderer
   {
     return new MustacheRenderer(__DIR__ . '/../view');
+  }
+
+  private function getMailer(): Mailer
+  {
+    return new Mailer(
+      $this->config['smtp_hostname'],
+      $this->config['smtp_port'],
+      $this->config['smtp_username'],
+      $this->config['smtp_password']
+    );
   }
 
   public function getOrDefault(string $controllerName, string $defaultControllerName)
@@ -59,7 +69,7 @@ class Configurator
 
   public function getUsuarioModel()
   {
-    return new UsuarioModel($this->getDatabase());
+    return new UsuarioModel($this->getDatabase(), $this->getMailer(), $this->getRenderer());
   }
 
   public function getPreguntasModel()

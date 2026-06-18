@@ -42,12 +42,20 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          SMTP_HOSTNAME: ${{ secrets.SMTP_HOSTNAME }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         run: |
-          echo "hostname='$DB_HOSTNAME'" > config/config.ini
-          echo "username='$DB_USERNAME'" >> config/config.ini
-          echo "password='$DB_PASSWORD'" >> config/config.ini
-          echo "database='$DB_DATABASE'" >> config/config.ini
-          echo "automigrate='true'" >> config/config.ini
+          echo "db_hostname='$DB_HOSTNAME'" > config/config.ini
+          echo "db_username='$DB_USERNAME'" >> config/config.ini
+          echo "db_password='$DB_PASSWORD'" >> config/config.ini
+          echo "db_database='$DB_DATABASE'" >> config/config.ini
+          echo "db_automigrate='true'" >> config/config.ini
+          echo "smtp_hostname='$SMTP_HOSTNAME'" >> config/config.ini
+          echo "smtp_port='$SMTP_PORT'" >> config/config.ini
+          echo "smtp_username='$SMTP_USERNAME'" >> config/config.ini
+          echo "smtp_password='$SMTP_PASSWORD'" >> config/config.ini
         shell: bash
 
       - name: Desplegar a Hosting via FTP
@@ -79,15 +87,3 @@ jobs:
           remote_path: ${{ secrets.FTP_SERVER_DIR }}
           sftpArgs: '-o ConnectTimeout=5'
           rsyncArgs: '--exclude=.git --exclude=*.log --include=public/avatars/default.webp --exclude=public/avatars/*'
-
-      # - name: Desplegar a Hosting via SSH
-      #   if: ${{ vars.FTP_PROTOCOL == 'sftp' }}
-      #   uses: wangyucode/sftp-upload-action@v3
-      #   with:
-      #     host: ${{ secrets.FTP_HOSTNAME }}
-      #     port: ${{ secrets.FTP_PORT }}
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     localDir: ./
-      #     remoteDir: ${{ secrets.FTP_SERVER_DIR }}
-      #     concurrency: 10
