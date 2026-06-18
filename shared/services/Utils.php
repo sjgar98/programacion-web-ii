@@ -28,6 +28,6 @@ class Utils
       ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
       isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
       $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
-    return ($isSecure ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'];
+    return ($isSecure ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'];
   }
 }
