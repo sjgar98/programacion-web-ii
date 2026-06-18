@@ -61,9 +61,7 @@ class RegistroController
         $token = bin2hex(random_bytes(16));
         $this->model->crearNuevoUsuario($nombre, $apellido, $anio_nacimiento, $sexo, $pais, $ciudad, $email, $username, $password, $nombreFoto, $token, $latitud, $longitud);
 
-        $this->renderer->render("registroExitoso.mustache", [
-            "token" => $token
-        ]);
+        $this->renderer->render("registroExitoso.mustache");
     }
 
     public function validar()

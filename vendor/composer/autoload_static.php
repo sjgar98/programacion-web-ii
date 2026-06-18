@@ -12,6 +12,10 @@ class ComposerStaticInit071586d19f5409de22b3235d85d8476c
             'chillerlan\\Settings\\' => 20,
             'chillerlan\\QRCode\\' => 18,
         ),
+        'P' =>
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'M' =>
         array (
             'Mustache\\' => 9,
@@ -26,6 +30,10 @@ class ComposerStaticInit071586d19f5409de22b3235d85d8476c
         'chillerlan\\QRCode\\' =>
         array (
             0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
+        ),
+        'PHPMailer\\PHPMailer\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Mustache\\' =>
         array (
