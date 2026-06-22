@@ -17,13 +17,13 @@ class PerfilModel
       "WITH usuarios_rankeados AS (
         SELECT
           u.*,
-          COALESCE(SUM(p.puntaje), 0) as puntaje_total,
-          ROW_NUMBER() OVER (ORDER BY puntaje_total DESC) AS ranking
+          COALESCE(MAX(p.puntaje), 0) as puntaje_max,
+          ROW_NUMBER() OVER (ORDER BY puntaje_max DESC) AS ranking
         FROM usuarios u
         LEFT JOIN partidas p
         ON u.id = p.jugador_id
         GROUP BY u.id
-        ORDER BY puntaje_total DESC
+        ORDER BY puntaje_max DESC
       )
       SELECT * FROM usuarios_rankeados
       WHERE id = ?;",

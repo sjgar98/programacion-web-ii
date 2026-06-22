@@ -30,7 +30,7 @@ class LobbyModel
 
     public function obtenerPuntajeRanking($usuario_id)
     {
-        $obtenerPuntaje = "SELECT SUM(puntaje) AS puntaje_total FROM partidas WHERE jugador_id = ?";
+        $obtenerPuntaje = "SELECT MAX(puntaje) AS puntaje_max FROM partidas WHERE jugador_id = ?";
         Log::info("SQL: $obtenerPuntaje");
         return $this->database->query($obtenerPuntaje,[$usuario_id]);
     }
