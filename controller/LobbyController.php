@@ -27,11 +27,11 @@ class LobbyController
         $puntajeRankingArray = $this->model->obtenerPuntajeRanking($id);
 
         $usuario = !empty($datosUsuarioArray) ? $datosUsuarioArray[0] : null;
-        $puntajeTotal = !empty($puntajeRankingArray) ? ($puntajeRankingArray[0]['puntaje_total'] ?? 0) : 0;
+        $puntajeMax = !empty($puntajeRankingArray) ? ($puntajeRankingArray[0]['puntaje_max'] ?? 0) : 0;
 
         $this->renderer->render("lobby.mustache", [
             "usuario" => $usuario,
-            "puntaje_total" => $puntajeTotal,
+            "puntaje_max" => $puntajeMax,
             "partidas" => $historialPartidas
         ]);
     }
