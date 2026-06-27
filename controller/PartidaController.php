@@ -18,9 +18,7 @@ class PartidaController
     {
 
         Log::info("PartidaController::ver");
-        if (!isset($_SESSION['usuario_loggeado'])) {
-            Redirect::toLogin();
-        }
+        Auth::getUsuarioLoggeado();
 
         $this->partidaModel->establecerPartida();
 
@@ -41,9 +39,7 @@ class PartidaController
     }
     public function verificarRespuesta()
     {
-        if (!isset($_SESSION['usuario_loggeado'])) {
-            Redirect::toIndex();
-        }
+        Auth::getUsuarioLoggeado();
 
         $idRespuesta = $_POST['id_respuesta'] ?? null;
 

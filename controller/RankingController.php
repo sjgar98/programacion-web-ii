@@ -15,10 +15,8 @@ class RankingController
 
   public function ver()
   {
+    Auth::getUsuarioLoggeado();
     Log::info("RankingController::ver");
-    if (!isset($_SESSION['usuario_loggeado'])) {
-      Redirect::toLogin();
-    }
     $listaUsuariosRanking = $this->model->getRankingUsuarios();
     $this->renderer->render("verRanking", [
       "usuarios_ranking" => $listaUsuariosRanking
