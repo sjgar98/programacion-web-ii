@@ -24,7 +24,7 @@ class LoginController
         Log::info(json_encode($usuario));
         if ($usuario && $this->model->validarLogin($usuario, $password)) {
             Log::info("Validó");
-            $_SESSION['usuario_loggeado'] = $usuario;
+            Auth::setUsuarioLoggeado($usuario);
             Redirect::toIndex();
         } else {
             $this->renderer->render("login", ["error" => "Usuario o clave incorrectos"]);
@@ -39,7 +39,7 @@ class LoginController
 
     public function logout()
     {
-        unset($_SESSION['usuario_loggeado']);
+        Auth::setUsuarioLoggeado(null);
         Redirect::toLogin();
     }
 }

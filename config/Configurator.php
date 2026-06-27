@@ -135,4 +135,14 @@ class Configurator
   {
     return new RankingModel($this->getDatabase());
   }
+
+  public function getAdminController()
+  {
+    return new AdminController($this->getAdminModel(), $this->getRenderer(), new Request());
+  }
+
+  public function getAdminModel()
+  {
+    return new AdminModel($this->getDatabase());
+  }
 }

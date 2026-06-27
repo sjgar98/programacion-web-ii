@@ -14,11 +14,12 @@ class MustacheRenderer implements Renderer
 
   public function render(string $viewName, array $data = [], bool $echoOutput = true): string
   {
-    $extraData = array();
-    if ($_SESSION['usuario_loggeado']) {
-      $extraData['usuario_loggeado'] = $_SESSION['usuario_loggeado'];
-    }
-    $extraData['base_url'] = Utils::getBaseUrl();
+    $extraData = array(
+      'base_url' => Utils::getBaseUrl(),
+      'usuario_loggeado' => Auth::getUsuarioLoggeado(false),
+      'es_editor' => Auth::esEditor(),
+      'es_admin' => Auth::esAdmin()
+    );
     $template = $this->mustache->loadTemplate($viewName);
     $renderedTemplate = $template->render(array_merge($data, $extraData));
     if ($echoOutput) {
