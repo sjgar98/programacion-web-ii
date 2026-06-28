@@ -1,0 +1,62 @@
+{{> header}}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center fw-bold text-primary mb-4">Gestión de Reportes</h2>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Jugador</th>
+                                    <th>Pregunta</th>
+                                    <th>Motivo del Reporte</th>
+                                    <th>Fecha</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#reportes}}
+                                <tr>
+                                    <td class="fw-bold">{{nombre_jugador}}</td>
+                                    <td class="text-secondary">{{enunciado_pregunta}}</td>
+                                    <td>{{texto}}</td>
+                                    <td><small class="text-muted">{{fecha}}</small></td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center">
+                        <form action="/reportes/resolver" method="POST" class="me-2">
+                            <input type="hidden" name="id_reporte" value="{{id}}">
+                            <button type="submit" class="btn btn-success btn-sm">Resolver</button>
+                        </form>
+                        
+                        <form action="/reportes/descartar" method="POST">
+                            <input type="hidden" name="id_reporte" value="{{id}}">
+                            <button type="submit" class="btn btn-danger btn-sm">Descartar</button>
+                        </form>
+                    </div>
+                                    </td>
+                                </tr>
+                                {{/reportes}}
+                                
+                                {{^reportes}}
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">No hay reportes pendientes.</td>
+                                </tr>
+                                {{/reportes}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <a href="/lobby" class="btn btn-outline-secondary rounded-pill">Volver al Home</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{{> footer}}

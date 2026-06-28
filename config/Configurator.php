@@ -145,4 +145,15 @@ class Configurator
   {
     return new AdminModel($this->getDatabase());
   }
+
+  public function getReportesModel()
+  {
+    return new ReportesModel($this->getDatabase());
+  }
+
+  public function getReportesController()
+  {
+
+    return new ReportesController($this->getRenderer(), new Request(), $this->getReportesModel(), $this->getPartidaModel());
+  }
 }
