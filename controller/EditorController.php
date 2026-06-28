@@ -14,13 +14,13 @@ class EditorController
     }
 
     public function ver(){
-        $this->validarAcceso();
+        Auth::puedeAccederEditor();
         $this->renderer->render("editorPantalla");
     }
 
     public function listarPreguntas()
     {
-        $this->validarAcceso();
+        Auth::puedeAccederEditor();
 
         $preguntas = $this->preguntasModel->getPreguntasConCategoria();
 
@@ -30,7 +30,7 @@ class EditorController
 
     public function eliminarPregunta()
     {
-        $this->validarAcceso();
+        Auth::puedeAccederEditor();
 
         $preguntaId = $_GET["pregunta_id"] ?? null;
         if($preguntaId){
@@ -41,14 +41,14 @@ class EditorController
 
     public function crearNuevaPregunta()
     {
-        $this->validarAcceso();
+        Auth::puedeAccederEditor();
         $nuevaPregunta = $this->preguntasModel->getCategorias();
         $this->renderer->render("editorCrearNuevaPregunta",["categorias" => $nuevaPregunta]);
     }
 
     public function guardarNuevaPregunta()
     {
-        $this->validarAcceso();
+        Auth::puedeAccederEditor();
 
         $preguntaEnunciado = $_POST["enunciado"];
         $preguntaCategoriaId = $_POST["categoria_id"];
@@ -66,7 +66,7 @@ class EditorController
 
     public function modificarPregunta()
     {
-        $this->validarAcceso();
+        Auth::puedeAccederEditor();
 
         $preguntaId = $_GET["pregunta_id"] ?? null;
 
@@ -83,6 +83,7 @@ class EditorController
 
     public function actualizarPregunta()
     {
+        Auth::puedeAccederEditor();
         $preguntaId = $_POST["id"];
         $preguntaEnunciado = $_POST["enunciado"];
         $preguntaCategoriaId = $_POST["categoria_id"];
@@ -98,17 +99,6 @@ class EditorController
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta3, 0);
         Redirect::to("/editor/listarPreguntas");
 
-    }
-
-    private function validarAcceso()
-    {
-        if(!isset($_SESSION["usuario_loggeado"]) || empty($_SESSION["usuario_loggeado"])){
-            Redirect::toLogin();
-        }
-
-        if($_SESSION["usuario_loggeado"]->rol_id != 2){
-            Redirect::toLobby();
-        }
     }
 
 
