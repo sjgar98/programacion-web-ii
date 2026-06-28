@@ -89,4 +89,22 @@ class PreguntasModel
         Log::info("SQL: $sql");;
         return $this->database->query($sql);
     }
+
+    public function getPreguntaPorId($id)
+    {
+        $sql = "SELECT * FROM preguntas WHERE id = ? AND activa = 1";
+        Log::info("SQL: $sql con ID: $id");
+        return $this->database->query($sql, [$id]);
+    }
+
+    public function getPreguntasConCategoria()
+    {
+        $sql = "SELECT p.id, p.enunciado, p.activa, c.nombre AS nombre_categoria 
+                FROM preguntas p
+                JOIN categorias c ON p.categoria_id = c.id
+                WHERE p.activa = 1";
+        Log::info("SQL: $sql");
+        return $this->database->query($sql);
+    }
+
 }
