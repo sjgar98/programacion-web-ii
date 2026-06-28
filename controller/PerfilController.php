@@ -16,12 +16,11 @@ class PerfilController
   public function ver()
   {
     Log::info("PerfilController::ver");
+    $usuarioLoggeado = Auth::getUsuarioLoggeado();
     if ($this->request->get('userId')) {
       $userId = $this->request->get('userId');
-    } elseif (isset($_SESSION['usuario_loggeado'])) {
-      $userId = $_SESSION['usuario_loggeado']->id;
     } else {
-      Redirect::toLogin();
+      $userId = $usuarioLoggeado->id;
     }
     $user = $this->model->getPerfilUsuario($userId);
     if ($user) {
@@ -29,7 +28,7 @@ class PerfilController
       $this->renderer->render("verPerfilPropio", [
         "usuario" => $user,
         "partidas" => $partidas,
-        "propio" => $user->id == $_SESSION['usuario_loggeado']->id,
+        "propio" => $user->id == $usuarioLoggeado->id,
         "perfil_qr" => $this->model->getPerfilUsuarioQR($user->id),
         "estilos_especificos" => array('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')
       ]);

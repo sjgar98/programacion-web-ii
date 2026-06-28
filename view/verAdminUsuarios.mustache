@@ -1,0 +1,43 @@
+{{>header}}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-xl-6">
+            <div class="card shadow container rounded-4 py-3 my-3">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center">Administración de usuarios</h1>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Email</th>
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#usuarios}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{username}}</td>
+                                    <td>{{email}}</td>
+                                    <td class="text-capitalize">{{rol}}</td>
+                                    <td></td>
+                                </tr>
+                                {{/usuarios}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}

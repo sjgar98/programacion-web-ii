@@ -15,11 +15,7 @@ class LobbyController
 
     public function ver()
     {
-        if (!isset($_SESSION['usuario_loggeado']) || empty($_SESSION['usuario_loggeado'])) {
-            Redirect::toLogin();
-        }
-
-        $usuarioObjeto = $_SESSION['usuario_loggeado'];
+        $usuarioObjeto = Auth::getUsuarioLoggeado();
         $id = $usuarioObjeto->id;
 
         $datosUsuarioArray = $this->model->obtenerDatosUsuario($id);
