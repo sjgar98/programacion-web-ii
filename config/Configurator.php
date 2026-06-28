@@ -135,4 +135,15 @@ class Configurator
   {
     return new RankingModel($this->getDatabase());
   }
+
+  public function getEditorController()
+  {
+      return new EditorController($this->getPreguntasModel(),$this->getReporteModel(),$this->getRenderer(),new Request());
+  }
+
+  public function getReporteModel()
+  {
+      return new ReporteModel($this->getDatabase());
+  }
+
 }
