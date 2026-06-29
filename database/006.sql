@@ -1,0 +1,2 @@
+ALTER TABLE preguntas
+ADD COLUMN activa TINYINT DEFAULT 1;

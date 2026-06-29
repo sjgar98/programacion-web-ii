@@ -136,6 +136,11 @@ class Configurator
     return new RankingModel($this->getDatabase());
   }
 
+  public function getEditorController()
+  {
+      return new EditorController($this->getPreguntasModel(),$this->getRenderer(),new Request());
+  }
+
   public function getAdminController()
   {
     return new AdminController($this->getAdminModel(), $this->getRenderer(), new Request());
