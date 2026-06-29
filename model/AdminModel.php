@@ -27,8 +27,8 @@ class AdminModel
       "SELECT
         u.*,
         COUNT(pr.respuesta_id) AS total_respondidas,
-        SUM(r.es_correcta) AS total_correctas,
-        ROUND(AVG(r.es_correcta) * 100, 2) AS porcentaje_correctas
+        COALESCE(SUM(r.es_correcta), 0) AS total_correctas,
+        ROUND(COALESCE(AVG(r.es_correcta), 0) * 100, 2) AS porcentaje_correctas
       FROM usuarios u
       LEFT JOIN preguntas_resueltas pr ON u.id = pr.jugador_id
       LEFT JOIN respuestas r ON pr.respuesta_id = r.id
