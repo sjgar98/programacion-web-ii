@@ -76,20 +76,28 @@ class PartidaModel
     public function establecerPartida()
     {
         $idJugador = $_SESSION['usuario_loggeado']->id;
+
         if (empty($_SESSION['id_partida'])) {
             $sql = "INSERT INTO partidas (jugador_id, puntaje, completada) VALUES (?, 0, 0)";
             $this->database->execute($sql, [$idJugador]);
-
-            $sqlId = "SELECT LAST_INSERT_ID() as id";
-            $resultadoId = $this->database->query($sqlId);
+            $resultadoId = $this->database->query("SELECT LAST_INSERT_ID() as id");
             $_SESSION['id_partida'] = (int)$resultadoId[0]['id'];
         }
+
         if (empty($_SESSION['pregunta'])) {
-            $pregunta = $this->buscarPreguntaAleatoria('media');
+
+            $ratio = $this->obtenerRatioJugador($idJugador);
+            $orden = ($ratio > 0.7) ? "ASC" : "DESC";
+
+            $pregunta = $this->buscarPreguntasPartidaActual($idJugador, $orden);
+
+
+            if (!$pregunta) {
+                $pregunta = $this->buscarPreguntaAleatoria('media');
+            }
+
             $_SESSION['pregunta'] = $pregunta;
             $_SESSION['respuesta'] = $this->obtenerRespuestasPorPregunta($pregunta->id);
-            $_SESSION['tiempo_limite'] = time() + 60;
-        } elseif (!isset($_SESSION['tiempo_limite'])) {
             $_SESSION['tiempo_limite'] = time() + 60;
         }
     }
@@ -156,5 +164,65 @@ class PartidaModel
     {
         $sql = "SELECT * FROM usuarios";
         return $this->database->query($sql);
+    }
+
+    public function obtenerDatosPartida($jugador_id)
+    {
+        $sql = "SELECT * FROM partidas  WHERE jugador_id = ?  ORDER BY fecha DESC LIMIT 1";
+        $resultado = $this->database->query($sql, [$jugador_id]);
+        return !empty($resultado) ? $resultado[0] : null;
+    }
+
+    public function obtenerPreguntasDeLaPartida($jugador_id)
+    {
+        $sql = "SELECT  pr.pregunta_id AS id, p.enunciado, r.es_correcta FROM preguntas_resueltas pr 
+        JOIN preguntas p ON pr.pregunta_id = p.id
+        JOIN respuestas r ON pr.respuesta_id = r.id
+        WHERE pr.partida_id = ( SELECT id  FROM partidas  WHERE jugador_id = ?  ORDER BY fecha DESC LIMIT 1)";
+        $resultado = $this->database->query($sql, [$jugador_id]);
+        return !empty($resultado) ? $resultado : null;
+    }
+
+    public function buscarPreguntasPartidaActual($jugadorId, $orden)
+    {
+        $orden = ($orden === 'ASC') ? 'ASC' : 'DESC';
+        $partidaId = $_SESSION['id_partida'] ?? 0;
+
+        $sql = "SELECT 
+                    p.id, 
+                    p.enunciado,
+                    dificultad.ratio_acierto_pregunta
+                FROM preguntas p
+                LEFT JOIN (
+                    SELECT 
+                        pr.pregunta_id, 
+                        (SUM(CASE WHEN r.es_correcta = 1 THEN 1 ELSE 0 END) * 1.0 / NULLIF(COUNT(pr.id), 0)) AS ratio_acierto_pregunta
+                    FROM preguntas_resueltas pr
+                    JOIN respuestas r ON pr.respuesta_id = r.id
+                    GROUP BY pr.pregunta_id
+                ) AS dificultad ON p.id = dificultad.pregunta_id
+                WHERE NOT EXISTS (
+                    SELECT 1 
+                    FROM preguntas_resueltas pr 
+                    WHERE pr.pregunta_id = p.id 
+                    AND pr.partida_id = ?
+                )
+                ORDER BY COALESCE(dificultad.ratio_acierto_pregunta, 0.5) $orden, RAND()
+                LIMIT 10";
+
+        $resultado = $this->database->query($sql, [$partidaId], true);
+        return !empty($resultado) ? $resultado[array_rand($resultado)] : null;
+    }
+
+    public function obtenerRatioJugador($jugadorId)
+    {
+        $sql = "SELECT 
+                    (SUM(CASE WHEN r.es_correcta = 1 THEN 1 ELSE 0 END) * 1.0 / NULLIF(COUNT(pr.id), 0)) AS ratio
+                FROM preguntas_resueltas pr
+                JOIN respuestas r ON pr.respuesta_id = r.id
+                WHERE pr.jugador_id = ?";
+
+        $resultado = $this->database->query($sql, [$jugadorId]);
+        return $resultado[0]['ratio'] ?? 0.5;
     }
 }

@@ -1,0 +1,121 @@
+INSERT INTO preguntas (id, enunciado, categoria_id) VALUES
+-- Artes
+(26, '¿Qué pintor es famoso por sus pinturas de nenúfares?', 1),
+(27, '¿Cómo se llama la técnica de pintar sobre yeso húmedo?', 1),
+(28, '¿Quién pintó "La noche estrellada"?', 1),
+(29, '¿Qué movimiento artístico lideró Salvador Dalí?', 1),
+(30, '¿Cuál es el nombre del arquitecto de la Sagrada Familia?', 1),
+(31, '¿Qué instrumento tocaba Freddie Mercury?', 1),
+(32, '¿Quién esculpió "El pensador"?', 1),
+(33, '¿Qué pintor holandés se cortó parte de la oreja?', 1),
+(34, '¿Cómo se llama el retrato de una persona hecho por sí misma?', 1),
+(35, '¿Qué artista es reconocido por sus murales en México?', 1),
+
+-- Ciencia 
+(36, '¿Cuál es el centro de un átomo?', 2),
+(37, '¿Qué planeta es conocido como el "planeta rojo"?', 2),
+(38, '¿Cuál es la fórmula química del agua?', 2),
+(39, '¿Qué órgano humano filtra la sangre?', 2),
+(40, '¿Cuál es la velocidad de la luz aproximadamente (en km/s)?', 2),
+(41, '¿Quién descubrió la penicilina?', 2),
+(42, '¿Cómo se llama la parte de la biología que estudia los animales?', 2),
+(43, '¿Qué tipo de energía produce el sol?', 2),
+(44, '¿Cuál es la unidad de medida de la fuerza?', 2),
+(45, '¿Qué gas respiramos principalmente?', 2),
+
+-- Deportes 
+(46, '¿En qué deporte se utiliza una "raqueta"?', 3),
+(47, '¿Cuántos jugadores hay por equipo en un partido de fútbol?', 3),
+(48, '¿Qué país ha ganado más Mundiales de Fútbol?', 3),
+(49, '¿En qué deporte destaca Michael Phelps?', 3),
+(50, '¿Qué distancia se corre en una maratón?', 3),
+(51, '¿Cuál es el nombre del torneo de tenis más antiguo?', 3),
+(52, '¿Cómo se llama el campo donde se juega al golf?', 3),
+(53, '¿Quién es considerado el mejor jugador de básquet de la historia?', 3),
+(54, '¿Qué país inventó el rugby?', 3),
+(55, '¿En qué deporte se utiliza un "guante de receptor"?', 3),
+
+-- Geografía 
+(56, '¿Cuál es la capital de Francia?', 5),
+(57, '¿En qué país se encuentra la Torre de Pisa?', 5),
+(58, '¿Cuál es el océano más grande del mundo?', 5),
+(59, '¿Qué país tiene forma de bota?', 5),
+(60, '¿Cuál es el desierto más grande del mundo?', 5),
+(61, '¿Qué ciudad es conocida como "la ciudad de los canales"?', 5),
+(62, '¿Cuál es la montaña más alta del mundo?', 5),
+(63, '¿En qué continente está Japón?', 5),
+(64, '¿Cuál es el país más poblado del mundo?', 5),
+(65, '¿Qué río atraviesa Londres?', 5),
+
+-- Historia 
+(66, '¿Quién fue el primer emperador romano?', 6),
+(67, '¿Qué evento inició la Revolución Francesa en 1789?', 6),
+(68, '¿Quién escribió la Declaración de Independencia de EE.UU.?', 6),
+(69, '¿En qué año cayó el Muro de Berlín?', 6),
+(70, '¿Quién fue la última reina de Francia antes de la revolución?', 6),
+(71, '¿Qué país financió los viajes de Colón?', 6),
+(72, '¿Cómo se llamaba la famosa reina de Egipto?', 6),
+(73, '¿Cuál fue la civilización que inventó la escritura cuneiforme?', 6),
+(74, '¿Qué personaje histórico lideró la independencia de la India?', 6),
+(75, '¿En qué siglo comenzó el Renacimiento?', 6);
+
+INSERT INTO respuestas (pregunta_id, texto, es_correcta) VALUES
+-- Respuestas Artes
+(26, 'Claude Monet', 1), (26, 'Van Gogh', 0), (26, 'Dalí', 0), (26, 'Picasso', 0),
+(27, 'Fresco', 1), (27, 'Óleo', 0), (27, 'Acuarela', 0), (27, 'Grafiti', 0),
+(28, 'Vincent van Gogh', 1), (28, 'Monet', 0), (28, 'Renoir', 0), (28, 'Goya', 0),
+(29, 'Surrealismo', 1), (29, 'Cubismo', 0), (29, 'Impresionismo', 0), (29, 'Pop Art', 0),
+(30, 'Antoni Gaudí', 1), (30, 'Calatrava', 0), (30, 'Le Corbusier', 0), (30, 'Dalí', 0),
+(31, 'Piano', 1), (31, 'Guitarra', 0), (31, 'Violín', 0), (31, 'Batería', 0),
+(32, 'Auguste Rodin', 1), (32, 'Miguel Ángel', 0), (32, 'Bernini', 0), (32, 'Donatello', 0),
+(33, 'Vincent van Gogh', 1), (33, 'Picasso', 0), (33, 'Duchamp', 0), (33, 'Rembrandt', 0),
+(34, 'Autorretrato', 1), (34, 'Retrato', 0), (34, 'Biografía', 0), (34, 'Fotografía', 0),
+(35, 'Diego Rivera', 1), (35, 'Frida Kahlo', 0), (35, 'Botero', 0), (35, 'Tamayo', 0),
+
+-- Respuestas Ciencia
+(36, 'Núcleo', 1), (36, 'Electrón', 0), (36, 'Corteza', 0), (36, 'Protón', 0),
+(37, 'Marte', 1), (37, 'Júpiter', 0), (37, 'Venus', 0), (37, 'Saturno', 0),
+(38, 'H2O', 1), (38, 'CO2', 0), (38, 'NaCl', 0), (38, 'O2', 0),
+(39, 'Riñones', 1), (39, 'Hígado', 0), (39, 'Corazón', 0), (39, 'Pulmones', 0),
+(40, '300.000 km/s', 1), (40, '150.000 km/s', 0), (40, '1.000 km/s', 0), (40, 'Velocidad del sonido', 0),
+(41, 'Alexander Fleming', 1), (41, 'Louis Pasteur', 0), (41, 'Einstein', 0), (41, 'Newton', 0),
+(42, 'Zoología', 1), (42, 'Botánica', 0), (42, 'Biología', 0), (42, 'Ecología', 0),
+(43, 'Nuclear', 1), (43, 'Eólica', 0), (43, 'Hidráulica', 0), (43, 'Fósil', 0),
+(44, 'Newton', 1), (44, 'Joule', 0), (44, 'Vatio', 0), (44, 'Pascal', 0),
+(45, 'Nitrógeno', 1), (45, 'Oxígeno', 0), (45, 'Argón', 0), (45, 'Dióxido de carbono', 0),
+
+-- Respuestas Deportes
+(46, 'Tenis', 1), (46, 'Fútbol', 0), (46, 'Natación', 0), (46, 'Rugby', 0),
+(47, '11', 1), (47, '10', 0), (47, '12', 0), (47, '9', 0),
+(48, 'Brasil', 1), (48, 'Alemania', 0), (48, 'Italia', 0), (48, 'Argentina', 0),
+(49, 'Natación', 1), (49, 'Atletismo', 0), (49, 'Ciclismo', 0), (49, 'Básquet', 0),
+(50, '42.195 km', 1), (50, '21 km', 0), (50, '10 km', 0), (50, '5 km', 0),
+(51, 'Wimbledon', 1), (51, 'Roland Garros', 0), (51, 'US Open', 0), (51, 'Australia Open', 0),
+(52, 'Campo de golf', 1), (52, 'Cancha', 0), (52, 'Estadio', 0), (52, 'Ring', 0),
+(53, 'Michael Jordan', 1), (53, 'LeBron James', 0), (53, 'Kobe Bryant', 0), (53, 'Shaq', 0),
+(54, 'Inglaterra', 1), (54, 'Francia', 0), (54, 'Nueva Zelanda', 0), (54, 'Australia', 0),
+(55, 'Béisbol', 1), (55, 'Sóftbol', 0), (55, 'Cricket', 0), (55, 'Fútbol', 0),
+
+-- Respuestas Geografía
+(56, 'París', 1), (56, 'Roma', 0), (56, 'Londres', 0), (56, 'Madrid', 0),
+(57, 'Italia', 1), (57, 'Francia', 0), (57, 'Grecia', 0), (57, 'España', 0),
+(58, 'Pacífico', 1), (58, 'Atlántico', 0), (58, 'Índico', 0), (58, 'Ártico', 0),
+(59, 'Italia', 1), (59, 'Grecia', 0), (59, 'Portugal', 0), (59, 'España', 0),
+(60, 'Antártida', 1), (60, 'Sahara', 0), (60, 'Gobi', 0), (60, 'Arábigo', 0),
+(61, 'Venecia', 1), (61, 'Ámsterdam', 0), (61, 'Brujas', 0), (61, 'Copenhague', 0),
+(62, 'Everest', 1), (62, 'Aconcagua', 0), (62, 'K2', 0), (62, 'Kilimanjaro', 0),
+(63, 'Asia', 1), (63, 'Europa', 0), (63, 'Oceanía', 0), (63, 'América', 0),
+(64, 'India', 1), (64, 'China', 0), (64, 'EE.UU.', 0), (64, 'Brasil', 0),
+(65, 'Támesis', 1), (65, 'Sena', 0), (65, 'Danubio', 0), (65, 'Rin', 0),
+
+-- Respuestas Historia
+(66, 'Augusto', 1), (66, 'Julio César', 0), (66, 'Nerón', 0), (66, 'Trajano', 0),
+(67, 'Toma de la Bastilla', 1), (67, 'Ejecución de Luis XVI', 0), (67, 'Reinado del Terror', 0), (67, 'Guerra de los 30 años', 0),
+(68, 'Thomas Jefferson', 1), (68, 'George Washington', 0), (68, 'Benjamin Franklin', 0), (68, 'John Adams', 0),
+(69, '1989', 1), (69, '1991', 0), (69, '1985', 0), (69, '1995', 0),
+(70, 'María Antonieta', 1), (70, 'Catalina de Médici', 0), (70, 'Juana de Arco', 0), (70, 'Ana de Austria', 0),
+(71, 'España', 1), (71, 'Portugal', 0), (71, 'Inglaterra', 0), (71, 'Francia', 0),
+(72, 'Cleopatra', 1), (72, 'Nefertiti', 0), (72, 'Hatshepsut', 0), (72, 'Isis', 0),
+(73, 'Sumerios', 1), (73, 'Egipcios', 0), (73, 'Babilonios', 0), (73, 'Asirios', 0),
+(74, 'Mahatma Gandhi', 1), (74, 'Nehru', 0), (74, 'Jinnah', 0), (74, 'Bose', 0),
+(75, 'Siglo XIV', 1), (75, 'Siglo X', 0), (75, 'Siglo XVIII', 0), (75, 'Siglo XII', 0);

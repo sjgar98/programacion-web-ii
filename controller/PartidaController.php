@@ -65,7 +65,11 @@ class PartidaController
         if ($esCorrecta) {
             Redirect::to("/partida");
         } else {
-            Redirect::toIndex();
+            $this->renderer->render('resumenPartida.mustache', [
+                'puntaje' => $this->partidaModel->obtenerDatosPartida($_SESSION['usuario_loggeado']->id)['puntaje'] ?? null,
+                'preguntas' => $this->partidaModel->obtenerPreguntasDeLaPartida($_SESSION['usuario_loggeado']->id) ?? null,
+                'fecha' => $this->partidaModel->obtenerDatosPartida($_SESSION['usuario_loggeado']->id)['fecha'] ?? null,
+            ]);
         }
     }
 }
