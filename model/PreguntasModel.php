@@ -113,5 +113,32 @@ class PreguntasModel
         return $this->database->query($sql, [$id]);
     }
 
+    public function getPreguntasSugeridasPorUsuario()
+    {
+        $sql = "SELECT p.id, p.enunciado, c.nombre AS nombre_categoria 
+            FROM preguntas p
+            JOIN categorias c ON p.categoria_id = c.id
+            WHERE p.estado = 'sugerida'";
+        return $this->database->query($sql);
+    }
+
+    public function aceptarPreguntaSugeridaPorUsuario($id)
+    {
+        $sql = "UPDATE preguntas
+                SET estado = 'activa'
+                WHERE id = ?";
+        Log::info("SQL: $sql: $id");
+        return $this->database->execute($sql,[$id]);
+    }
+
+    public function darDeBajaPreguntaSugeridaPorUsuario($id)
+    {
+        $sql = "UPDATE preguntas 
+                SET estado = 'rechazada'
+                WHERE id = ?";
+        Log::info("SQL: $sql: $id");
+        return $this->database->execute($sql,[$id]);
+    }
+
 
 }

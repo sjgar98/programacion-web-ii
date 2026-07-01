@@ -116,7 +116,44 @@ class EditorController
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta2, 0);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta3, 0);
         Redirect::to("/editor/listarPreguntas");
+    }
 
+    public function verPreguntasSugeridas()
+    {
+        Auth::puedeAccederEditor();
+
+        $preguntasSugeridas = $this->preguntasModel->getPreguntasSugeridasPorUsuario();
+
+        $this->renderer->render("editorPreguntasSugeridas", [
+            "sugerencias" => $preguntasSugeridas,
+            "total_sugerencias" => count($preguntasSugeridas)
+        ]);
+    }
+
+    public function aceptarPreguntaSugerida()
+    {
+        Auth::puedeAccederEditor();
+
+        $preguntaId = $_GET["pregunta_id"] ?? null;
+
+        if($preguntaId){
+            $this->preguntasModel->aceptarPreguntaSugeridaPorUsuario($preguntaId);
+        }
+
+        Redirect::to("/editor/verPreguntasSugeridas");
+    }
+
+    public function rechazarPreguntaSugerida()
+    {
+        Auth::puedeAccederEditor();
+
+        $preguntaId = $_GET["pregunta_id"] ?? null;
+
+        if($preguntaId){
+            $this->preguntasModel->darDeBajaPreguntaSugeridaPorUsuario($preguntaId);
+        }
+
+        Redirect::to("/editor/verPreguntasSugeridas");
     }
 
 
