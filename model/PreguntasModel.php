@@ -107,4 +107,11 @@ class PreguntasModel
         return $this->database->query($sql);
     }
 
+    public function getRespuestasPorPreguntaId($id)
+    {
+        $sql = "SELECT * FROM respuestas WHERE pregunta_id = ? ORDER BY es_correcta DESC";
+        return $this->database->query($sql, [$id]);
+    }
+
+
 }

@@ -76,9 +76,27 @@ class EditorController
 
         $pregunta = $this->preguntasModel->getPreguntaPorId($preguntaId);
         $categorias = $this->preguntasModel->getCategorias();
+        $respuestas = $this->preguntasModel->getRespuestasPorPreguntaId($preguntaId);
+
+        $idCategoriaActual = $pregunta[0]["categoria_id"] ?? null;
+
+        foreach ($categorias as &$categoria) {
+            if ($categoria["id"] == $idCategoriaActual) {
+                $categoria["selected"] = true;
+            } else {
+                $categoria["selected"] = false;
+            }
+        }
+        unset($categoria);
+
         $this->renderer->render("editorModificarPregunta",[
             "pregunta" => $pregunta,
-            "categorias" => $categorias]);
+            "categorias" => $categorias,
+            "es_correcta" => $respuestas[0]["texto"] ?? '',
+            "incorrecta_1" => $respuestas[1]["texto"] ?? '',
+            "incorrecta_2" => $respuestas[2]["texto"] ?? '',
+            "incorrecta_3" => $respuestas[3]["texto"] ?? ''
+        ]);
     }
 
     public function actualizarPregunta()
