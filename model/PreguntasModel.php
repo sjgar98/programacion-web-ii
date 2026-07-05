@@ -44,11 +44,12 @@ class PreguntasModel
         return $this->database->execute($sql, [$nombre]);
     }
 
-    public function agregarPregunta($enunciado, $categoria_id)
+    public function agregarPregunta($enunciado, $categoriaId, $estado = 'activa')
     {
-        $sql = "INSERT INTO preguntas(enunciado, categoria_id) VALUES (?,?)";
-        Log::info("SQL: $sql");
-        return $this->database->execute($sql,[$enunciado, $categoria_id]);
+        $sql = "INSERT INTO preguntas (enunciado, categoria_id, estado) VALUES (?, ?, ?)";
+        Log::info("SQL: $sql con valores: [$enunciado, $categoriaId, $estado]");
+        $this->database->execute($sql, [$enunciado, $categoriaId, $estado]);
+        return $this->database->getConexion()->insert_id;
     }
 
     public function modificarPregunta($id,$enunciado, $categoria_id)

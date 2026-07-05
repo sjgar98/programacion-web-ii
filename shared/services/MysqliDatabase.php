@@ -56,6 +56,11 @@ class MysqliDatabase implements Database
     $this->conexion->rollback();
   }
 
+    public function getConexion(): \mysqli
+    {
+        return $this->conexion;
+    }
+
   public function __destruct()
   {
     $this->conexion->close();
