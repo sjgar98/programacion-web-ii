@@ -1,78 +1,118 @@
 {{>header}}
 
-<div class="container py-5 d-flex flex-column justify-content-center align-items-center flex-grow-1">
-    
-    {{#error}}
-    <div class="row w-100 justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <div class="alert alert-danger alert-dismissible fade show rounded-4 mb-4 shadow-sm small d-flex align-items-center" role="alert">
-                <i class="material-symbols-outlined me-2">exclamation</i>
-                <div><strong>Error:</strong> {{error}}</div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+{{#error}}
+<div class="row w-100 justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="alert alert-danger alert-dismissible fade show rounded-4 mb-4 shadow-sm small d-flex align-items-center" role="alert">
+            <i class="material-symbols-outlined me-2">exclamation</i>
+            <div><strong>Error:</strong> {{error}}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
-    {{/error}}
-
-    <div class="row w-100 justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-           <div class="progress mb-3 rounded-pill shadow-sm" style="height: 20px;">
-    <div id="timerBar" class="progress-bar bg-success progress-bar-striped progress-bar-animated fw-bold text-white" 
-         role="progressbar" style="width: 100%;">
-         <span id="timerText">{{tiempo_restante}}</span>
-    </div>
 </div>
+{{/error}}
 
-            <div class="card shadow-lg border-0 rounded-4 overflow-hidden text-center bg-white">
-                <div class="card-header bg-gradient bg-primary text-white py-3 border-0">
+<div class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+            <div class="progress mb-3 rounded-pill shadow-sm" style="height: 18px;">
+                <div
+                    id="timerBar"
+                    class="progress-bar bg-success progress-bar-striped progress-bar-animated fw-bold text-white"
+                    role="progressbar"
+                    style="width: 100%;"
+                >
+                    <span id="timerText" class="small">{{tiempo_restante}}</span>
+                </div>
+            </div>
+
+            <div class="card shadow-lg border-0 rounded-4 text-center">
+
+                <div class="card-header bg-primary text-white py-2 border-0">
                     <span class="badge bg-white text-primary rounded-pill px-3 py-2 fw-bold text-uppercase">
                         ¡A Jugar!
                     </span>
                 </div>
 
-                <div class="card-body p-4 p-sm-5">
-                    
+                <div class="card-body p-3 p-md-4">
+
                     {{#pregunta}}
-                    <div class="mb-5">
-                        <h2 class="card-title fs-3 fw-bold text-dark lh-base">
+                    <div class="mb-4">
+                        <h2 class="h4 fw-bold text-dark mb-0">
                             {{enunciado}}
                         </h2>
                     </div>
                     {{/pregunta}}
 
                     {{^pregunta}}
-                    <div class="py-4 text-muted">
-                        <i class="material-symbols-outlined display-4 text-warning mb-2">help_center</i>
-                        <p class="fs-5 fw-semibold">No se encontró la pregunta actual.</p>
+                    <div class="py-3 text-muted">
+                        <i class="material-symbols-outlined display-5 text-warning mb-2">help_center</i>
+                        <p class="fs-6 fw-semibold mb-0">No se encontró la pregunta actual.</p>
                     </div>
                     {{/pregunta}}
 
                     {{#pregunta}}
-                    <div>
-                        <form id="formPartida" action="/partida/verificarRespuesta" method="POST" class="d-grid gap-3">
-                            {{#respuesta}}
-                            <button type="submit" name="id_respuesta" value="{{id}}" 
-                                    class="btn btn-lg btn-outline-primary text-start py-3 px-4 rounded-pill shadow-sm fw-bold border-2 d-flex align-items-center">
-                                <span class="badge bg-primary-subtle text-primary rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
-                                    ✓
-                                </span>
-                                <span class="text-wrap flex-grow-1 text-dark">{{texto}}</span>
+
+                    <form id="formPartida" action="/partida/verificarRespuesta" method="POST" class="d-grid gap-2">
+
+                        {{#respuesta}}
+                        <button
+                            type="submit"
+                            name="id_respuesta"
+                            value="{{id}}"
+                            class="btn btn-outline-primary btn-lg text-start py-2 px-3 rounded-pill shadow-sm fw-bold d-flex align-items-center"
+                        >
+                            <span class="badge bg-primary-subtle text-primary rounded-circle me-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:26px;height:26px;">
+                                ✓
+                            </span>
+
+                            <span class="flex-grow-1 text-dark text-wrap">
+                                {{texto}}
+                            </span>
+                        </button>
+                        {{/respuesta}}
+
+                    </form>
+
+                    <form id="usarTrampa" action="/partida/usarTrampa" method="POST" class="mt-3">
+
+                        {{#trampa}}
+                            {{#cantidad}}
+                            <button type="submit" class="btn btn-warning rounded-pill fw-bold px-4 py-2">
+                                Usar Trampa (Disponibles: {{cantidad}})
                             </button>
-                            {{/respuesta}}
-                        </form>
-                    </div>
+                            {{/cantidad}}
+
+                            {{^cantidad}}
+                            <button type="button" class="btn btn-secondary rounded-pill fw-bold px-4 py-2" disabled>
+                                Sin trampas
+                            </button>
+                            {{/cantidad}}
+                        {{/trampa}}
+
+                        {{^trampa}}
+                        <button type="button" class="btn btn-secondary rounded-pill fw-bold px-4 py-2" disabled>
+                            Sin trampas
+                        </button>
+                        {{/trampa}}
+
+                    </form>
+
                     {{/pregunta}}
 
                 </div>
-                
-                <div class="card-footer bg-light py-3 border-0 text-muted small fw-medium">
+
+                <div class="card-footer bg-light py-2 border-0 text-muted small fw-medium">
                     Partida en curso • El tiempo corre
                 </div>
+
             </div>
 
         </div>
     </div>
 </div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

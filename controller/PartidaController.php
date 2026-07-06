@@ -2,17 +2,19 @@
 
 class PartidaController
 {
-    private PreguntasModel $preguntasModel;
+
     private PartidaModel $partidaModel;
+    private TrampasModel $trampasModel;
     private Renderer $renderer;
     private Request $request;
 
-    public function __construct(PreguntasModel $preguntasModel, Renderer $renderer, Request $request, PartidaModel $partidaModel)
+    public function __construct(Renderer $renderer, Request $request, PartidaModel $partidaModel, TrampasModel $trampasModel)
     {
-        $this->preguntasModel = $preguntasModel;
+
         $this->partidaModel = $partidaModel;
         $this->renderer = $renderer;
         $this->request  = $request;
+        $this->trampasModel = $trampasModel;
     }
     public function ver()
     {
@@ -23,6 +25,7 @@ class PartidaController
         $this->partidaModel->establecerPartida();
 
         $tiempoRestante = 60;
+        $trampaJugador = $this->trampasModel->verTrampasJugador($_SESSION['usuario_loggeado']->id);
         if (isset($_SESSION['tiempo_limite'])) {
             $tiempoRestante = $_SESSION['tiempo_limite'] - time();
 
@@ -34,7 +37,8 @@ class PartidaController
         $this->renderer->render("partida", [
             'pregunta'        => $_SESSION['pregunta'] ?? null,
             'respuesta'       => $_SESSION['respuesta'] ?? null,
-            'tiempo_restante' => $tiempoRestante
+            'tiempo_restante' => $tiempoRestante,
+            'trampa'          => is_array($trampaJugador) ? $trampaJugador : ['cantidad' => $trampaJugador]
         ]);
     }
     public function verificarRespuesta()
@@ -49,7 +53,7 @@ class PartidaController
         }
 
         if ($esTimeout || empty($idRespuesta)) {
-            $this->partidaModel->reestabelecerPartida(false, null);
+            $this->partidaModel->reestabelecerPartida(false, null, false);
             Redirect::toIndex();
         }
 
@@ -60,7 +64,7 @@ class PartidaController
         }
 
         $esCorrecta = ($infoRespuesta['es_correcta'] == 1);
-        $this->partidaModel->reestabelecerPartida($esCorrecta, $idRespuesta);
+        $this->partidaModel->reestabelecerPartida($esCorrecta, $idRespuesta, false);
 
         if ($esCorrecta) {
             Redirect::to("/partida");
@@ -71,5 +75,29 @@ class PartidaController
                 'fecha' => $this->partidaModel->obtenerDatosPartida($_SESSION['usuario_loggeado']->id)['fecha'] ?? null,
             ]);
         }
+    }
+
+    public function usarTrampa()
+    {
+
+        Auth::getUsuarioLoggeado();
+
+        $esTimeout = false;
+        if (isset($_SESSION['tiempo_limite']) && time() > ($_SESSION['tiempo_limite'] + 2)) {
+            $esTimeout = true;
+        }
+
+        if ($esTimeout) {
+            $this->partidaModel->reestabelecerPartida(false, null, false);
+            Redirect::toIndex();
+        }
+
+        $respuestaCorrecta = $this->partidaModel->obtenerRespuestaCorrectaPorPregunta($_SESSION['pregunta']->id);
+        Log::info("Respuesta del pana " . $respuestaCorrecta['id']);
+
+        $this->partidaModel->descontarTrampaJugador($_SESSION['usuario_loggeado']->id);
+        $this->partidaModel->reestabelecerPartida(true, $respuestaCorrecta['id'], true);
+
+        Redirect::to("/partida");
     }
 }
