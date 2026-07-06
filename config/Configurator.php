@@ -113,7 +113,7 @@ class Configurator
 
   public function getLobbyController()
   {
-    return new LobbyController($this->getLobbyModel(), $this->getRenderer(), new Request());
+    return new LobbyController($this->getLobbyModel(), $this->getPreguntasModel(),$this->getRenderer(), new Request());
   }
 
   public function getLobbyModel()
