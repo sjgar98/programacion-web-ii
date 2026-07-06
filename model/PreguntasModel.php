@@ -46,7 +46,7 @@ class PreguntasModel
 
     public function agregarPregunta($enunciado, $categoria_id)
     {
-        $sql = "INSERT INTO preguntas(enunciado, categoria_id) VALUES (?,?)";
+        $sql = "INSERT INTO preguntas(enunciado, categoria_id,activa) VALUES (?,?,0)";
         Log::info("SQL: $sql");
         return $this->database->execute($sql,[$enunciado, $categoria_id]);
     }
@@ -118,14 +118,14 @@ class PreguntasModel
         $sql = "SELECT p.id, p.enunciado, c.nombre AS nombre_categoria 
             FROM preguntas p
             JOIN categorias c ON p.categoria_id = c.id
-            WHERE p.estado = 'sugerida'";
+            WHERE p.activa = 0";
         return $this->database->query($sql);
     }
 
     public function aceptarPreguntaSugeridaPorUsuario($id)
     {
         $sql = "UPDATE preguntas
-                SET estado = 'activa'
+                SET activa = 1
                 WHERE id = ?";
         Log::info("SQL: $sql: $id");
         return $this->database->execute($sql,[$id]);
@@ -133,9 +133,7 @@ class PreguntasModel
 
     public function darDeBajaPreguntaSugeridaPorUsuario($id)
     {
-        $sql = "UPDATE preguntas 
-                SET estado = 'rechazada'
-                WHERE id = ?";
+        $sql = "DELETE FROM preguntas WHERE id = ?";
         Log::info("SQL: $sql: $id");
         return $this->database->execute($sql,[$id]);
     }
