@@ -133,7 +133,7 @@ class Configurator
 
   public function getEditorController()
   {
-    return new EditorController($this->getPreguntasModel(), $this->getRenderer(), new Request());
+    return new EditorController($this->getPreguntasModel(), $this->getReportesModel(), $this->getRenderer(), new Request());
   }
 
   public function getAdminController()

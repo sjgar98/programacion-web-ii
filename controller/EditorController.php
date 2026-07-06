@@ -3,12 +3,14 @@
 class EditorController
 {
     private PreguntasModel $preguntasModel;
+    private ReportesModel $reportesModel;
     private Renderer $renderer;
     private Request $request;
 
-    public function __construct(PreguntasModel $preguntasModel,Renderer $renderer,Request $request)
+    public function __construct(PreguntasModel $preguntasModel, ReportesModel $reportesModel, Renderer $renderer, Request $request)
     {
         $this->preguntasModel = $preguntasModel;
+        $this->reportesModel = $reportesModel;
         $this->renderer = $renderer;
         $this->request = $request;
     }
@@ -78,6 +80,9 @@ class EditorController
         $categorias = $this->preguntasModel->getCategorias();
         $respuestas = $this->preguntasModel->getRespuestasPorPreguntaId($preguntaId);
 
+        $reporteId = $_GET["reporte_id"] ?? null;
+        $reporte = $this->reportesModel->getReporteById($reporteId);
+
         $idCategoriaActual = $pregunta[0]["categoria_id"] ?? null;
 
         foreach ($categorias as &$categoria) {
@@ -90,6 +95,8 @@ class EditorController
         unset($categoria);
 
         $this->renderer->render("editorModificarPregunta",[
+            "reporte_id" => $reporteId,
+            "reporte" => $reporte,
             "pregunta" => $pregunta,
             "categorias" => $categorias,
             "es_correcta" => $respuestas[0]["texto"] ?? '',
@@ -115,6 +122,12 @@ class EditorController
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta1, 0);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta2, 0);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta3, 0);
+
+        $reporteId = $_POST["reporte_id"] ?? null;
+        if ($reporteId) {
+            $this->reportesModel->resolverReporte($reporteId);
+        }
+
         Redirect::to("/editor/listarPreguntas");
     }
 
