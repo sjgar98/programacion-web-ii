@@ -10,10 +10,27 @@
                     </div>
                 </div>
                 <div class="row my-3">
+                    <div class="col-auto">
+                        <a href="{{base_url}}/admin/estadisticas" class="btn btn-secondary">Todas</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{base_url}}/admin/estadisticas?periodo=dia" class="btn btn-secondary">Hoy</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{base_url}}/admin/estadisticas?periodo=semana" class="btn btn-secondary">Esta Semana</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{base_url}}/admin/estadisticas?periodo=mes" class="btn btn-secondary">Este Mes</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{base_url}}/admin/estadisticas?periodo=año" class="btn btn-secondary">Este Año</a>
+                    </div>
+                </div>
+                <div class="row my-3">
                     <div class="col-12 col-sm-4 pb-3">
                         <div class="card text-center h-100">
                             <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Total de usuarios</h5>
+                                <h5 class="card-title">Total de usuarios registrados</h5>
                                 <p class="card-text">{{estadisticas.totalUsuarios}}</p>
                             </div>
                         </div>
@@ -21,7 +38,7 @@
                     <div class="col-12 col-sm-4 pb-3">
                         <div class="card text-center h-100">
                             <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Total de partidas</h5>
+                                <h5 class="card-title">Total de partidas jugadas</h5>
                                 <p class="card-text">{{estadisticas.totalPartidas}}</p>
                             </div>
                         </div>
@@ -80,7 +97,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <a href="{{base_url}}/admin/estadisticaspdf" download="estadisticas.pdf" class="btn btn-secondary">Descargar PDF</a>
+                        <a id="downloadPdf" href="{{base_url}}/admin/estadisticaspdf" download="estadisticas.pdf" class="btn btn-secondary">Descargar PDF</a>
                     </div>
                 </div>
             </div>
@@ -159,5 +176,7 @@
         </div>
     </div>
 </div>
+
+<script>document.getElementById('downloadPdf').href += window.location.search;</script>
 
 {{>footer}}
