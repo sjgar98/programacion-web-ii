@@ -79,21 +79,11 @@ class Configurator
 
   public function getPreguntasModel()
   {
-    return new PreguntasModel($this->getDatabase(), $this->getRandom());
+    return new PreguntasModel($this->getDatabase());
   }
   public function getRespuestasModel()
   {
-    return new RespuestasModel($this->getDatabase(), $this->getRandom());
-  }
-
-  public function getRandom()
-  {
-    return new Random($this->getDatabase());
-  }
-
-  public function getPreguntasController()
-  {
-    return new PreguntasController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getRespuestasModel());
+    return new RespuestasModel($this->getDatabase());
   }
 
   public function getLoginController()
@@ -118,7 +108,7 @@ class Configurator
 
   public function getPartidaController()
   {
-    return new PartidaController($this->getPreguntasModel(), $this->getRenderer(), new Request(), $this->getPartidaModel());
+    return new PartidaController($this->getRenderer(), new Request(), $this->getPartidaModel(), $this->getTrampaModel());
   }
 
   public function getLobbyController()
@@ -143,7 +133,7 @@ class Configurator
 
   public function getEditorController()
   {
-      return new EditorController($this->getPreguntasModel(),$this->getRenderer(),new Request());
+    return new EditorController($this->getPreguntasModel(), $this->getRenderer(), new Request());
   }
 
   public function getAdminController()
@@ -165,5 +155,10 @@ class Configurator
   {
 
     return new ReportesController($this->getRenderer(), new Request(), $this->getReportesModel(), $this->getPartidaModel());
+  }
+
+  public function getTrampaModel()
+  {
+    return new TrampasModel($this->getDatabase());
   }
 }

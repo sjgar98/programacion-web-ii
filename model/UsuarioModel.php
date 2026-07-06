@@ -50,6 +50,8 @@ class UsuarioModel
                 )
             );
         }
+        $this->crearTrampasUsuario($this->buscarUltimoUsuario());
+        //no me acuerdo si esto estaba bien o mal? pero x ahora lo dejo jeje
     }
 
     public function buscarUsuarioPorToken($token)
@@ -80,5 +82,23 @@ class UsuarioModel
     public function validarLogin(stdClass $usuario, string $password): bool
     {
         return password_verify($password, $usuario->password_hash);
+    }
+
+    public function buscarUltimoUsuario()
+    {
+        $sql = "SELECT id FROM usuarios ORDER BY id DESC LIMIT 1";
+        $resultado = $this->database->query($sql);
+        Log::info("USUARIO ID" . $resultado[0]['id']);
+        if (!empty($resultado) && isset($resultado[0]['id'])) {
+            return $resultado[0]['id'];
+        }
+
+        return null;
+    }
+
+    public function crearTrampasUsuario($usuario)
+    {
+        $sql = "INSERT INTO trampas (cantidad,jugador_id) VALUES (?,?)";
+        $this->database->execute($sql, [0, $usuario]);
     }
 }
