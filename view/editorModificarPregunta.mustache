@@ -13,10 +13,20 @@
     </div>
 
     <div class="card shadow-sm border-0 p-4" style="border-radius: 12px;">
+        {{#reporte}}
+        <div class="mb-4">
+            <h5 class="fw-semibold text-secondary" style="color: #1E1B4B;">Reporte asociado:</h5>
+            <p class="text-muted">{{reporte.texto}}</p>
+        </div>
+        {{/reporte}}
+
         <form action="/editor/actualizarPregunta" method="POST">
 
             {{#pregunta}}
             <input type="hidden" name="id" value="{{id}}">
+            {{#id_reporte}}
+            <input type="hidden" name="reporte_id" value="{{reporte_id}}">
+            {{/id_reporte}}
 
             <div class="mb-4">
                 <label for="enunciado" class="form-label fw-semibold text-secondary">Enunciado de la pregunta</label>

@@ -27,16 +27,17 @@
                                     <td><small class="text-muted">{{fecha}}</small></td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center">
-                        <form action="/reportes/resolver" method="POST" class="me-2">
-                            <input type="hidden" name="id_reporte" value="{{id}}">
-                            <button type="submit" class="btn btn-success btn-sm">Resolver</button>
-                        </form>
-                        
-                        <form action="/reportes/descartar" method="POST">
-                            <input type="hidden" name="id_reporte" value="{{id}}">
-                            <button type="submit" class="btn btn-danger btn-sm">Descartar</button>
-                        </form>
-                    </div>
+                                            <form action="/editor/modificarPregunta" method="GET" class="me-2">
+                                                <input type="hidden" name="reporte_id" value="{{id}}">
+                                                <input type="hidden" name="pregunta_id" value="{{pregunta_id}}">
+                                                <button type="submit" class="btn btn-success btn-sm">Resolver</button>
+                                            </form>
+
+                                            <form action="/reportes/descartar" method="POST">
+                                                <input type="hidden" name="id_reporte" value="{{id}}">
+                                                <button type="submit" class="btn btn-danger btn-sm">Descartar</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 {{/reportes}}
