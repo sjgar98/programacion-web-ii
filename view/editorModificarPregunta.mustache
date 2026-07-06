@@ -28,7 +28,9 @@
                 <label for="categoria_id" class="form-label fw-semibold text-secondary">Categoría</label>
                 <select class="form-select p-3" id="categoria_id" name="categoria_id" style="border-radius: 8px;" required>
                     {{#categorias}}
-                        <option value="{{id}}">{{nombre}}</option>
+                        <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                            {{nombre}}
+                        </option>
                     {{/categorias}}
                 </select>
             </div>
@@ -37,25 +39,25 @@
                 <label class="form-label fw-semibold text-secondary mb-1">Respuestas</label>
                 <p class="text-muted small mb-3">Modificá las opciones. Recordá que la primera casilla DEBE contener la respuesta correcta.</p>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text fw-bold text-white bg-success" style="border-radius: 8px 0 0 8px; width: 45px; justify-content: center;">✔</span>
-                    <input type="text" class="form-control p-3" name="es_correcta" placeholder="Escribí la respuesta CORRECTA aquí..." style="border-radius: 0 8px 8px 0;" required>
-                </div>
+               <div class="input-group mb-3">
+                   <span class="input-group-text fw-bold text-white bg-success" style="width: 45px; justify-content: center;">✔</span>
+                   <input type="text" class="form-control p-3" name="es_correcta" value="{{es_correcta}}" required>
+               </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text fw-bold text-white bg-danger" style="border-radius: 8px 0 0 8px; width: 45px; justify-content: center;">X</span>
-                    <input type="text" class="form-control p-3" name="es_incorrecta_1" placeholder="Opción incorrecta 1..." style="border-radius: 0 8px 8px 0;" required>
-                </div>
+               <div class="input-group mb-3">
+                   <span class="input-group-text fw-bold text-white bg-danger" style="width: 45px; justify-content: center;">X</span>
+                   <input type="text" class="form-control p-3" name="es_incorrecta_1" value="{{incorrecta_1}}" required>
+               </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text fw-bold text-white bg-danger" style="border-radius: 8px 0 0 8px; width: 45px; justify-content: center;">X</span>
-                    <input type="text" class="form-control p-3" name="es_incorrecta_2" placeholder="Opción incorrecta 2..." style="border-radius: 0 8px 8px 0;" required>
-                </div>
+               <div class="input-group mb-3">
+                   <span class="input-group-text fw-bold text-white bg-danger" style="width: 45px; justify-content: center;">X</span>
+                   <input type="text" class="form-control p-3" name="es_incorrecta_2" value="{{incorrecta_2}}" required>
+               </div>
 
-                <div class="input-group mb-4">
-                    <span class="input-group-text fw-bold text-white bg-danger" style="border-radius: 8px 0 0 8px; width: 45px; justify-content: center;">X</span>
-                    <input type="text" class="form-control p-3" name="es_incorrecta_3" placeholder="Opción incorrecta 3..." style="border-radius: 0 8px 8px 0;" required>
-                </div>
+               <div class="input-group mb-4">
+                   <span class="input-group-text fw-bold text-white bg-danger" style="width: 45px; justify-content: center;">X</span>
+                   <input type="text" class="form-control p-3" name="es_incorrecta_3" value="{{incorrecta_3}}" required>
+               </div>
             </div>
 
             <hr class="text-muted my-4">

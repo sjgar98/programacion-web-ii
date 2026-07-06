@@ -1,0 +1,87 @@
+{{> header}}
+
+<div class="container my-5" style="max-width: 1200px; font-family: 'Inter', sans-serif;">
+    <div class="mb-5 position-relative">
+        <h1 class="fw-bold text-dark mb-2" style="font-size: 2.25rem; color: #1E293B;">Preguntas Sugeridas por Usuarios</h1>
+        <p class="text-muted fs-5">Revisá y gestioná las preguntas sugeridas por la comunidad.</p>
+        <hr style="border-top: 3px solid #6366F1; width: 60px; margin: 0; border-radius: 2px;">
+    </div>
+
+    <div class="card border-0 mb-4 p-4 d-flex flex-row align-items-center justify-content-between"
+         style="background-color: #F8FAFC; border: 1px solid #EEF2F6 !important; border-radius: 16px;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center justify-content-center"
+                 style="width: 45px; height: 45px; background-color: #EEF2FF; border-radius: 12px;">
+                <i class="bi bi-lightbulb fs-4" style="color: #6366F1;"></i>
+            </div>
+            <span class="text-secondary fw-medium">Las preguntas sugeridas son enviadas por los usuarios y deben ser revisadas antes de ser publicadas.</span>
+        </div>
+        <div>
+            <span class="badge px-3 py-2 fw-semibold fs-6" style="background-color: #EEF2FF; color: #6366F1; border-radius: 10px;">
+                Total: {{total_sugerencias}} sugerencias
+            </span>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4" style="border-radius: 16px; background-color: #FFFFFF;">
+        <div class="table-responsive">
+            <table class="table align-middle" style="border-collapse: separate; border-spacing: 0;">
+                <thead>
+                    <tr style="color: #94A3B8; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        <th scope="col" class="pb-3 border-0">ID Sugerencia</th>
+                        <th scope="col" class="pb-3 border-0">Enunciado</th>
+                        <th scope="col" class="pb-3 border-0">Categoría Sugerida</th>
+                        <th scope="col" class="pb-3 border-0 text-end" style="padding-right: 24px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#sugerencias}}
+                    <tr style="border-bottom: 1px solid #F1F5F9;">
+                        <th scope="row" class="text-muted fw-normal py-4" style="font-size: 0.95rem;">#{{id}}</th>
+
+                        <td class="fw-semibold text-dark" style="font-size: 1rem; max-width: 400px;">{{enunciado}}</td>
+
+                        <td>
+                            <span class="badge px-3 py-2 fw-semibold fs-6 d-inline-flex align-items-center gap-2"
+                                  style="border-radius: 8px; background-color: #EEF2FF; color: #4F46E5;">
+                                🌐 {{nombre_categoria}}
+                            </span>
+                        </td>
+
+                        <td class="text-end py-4" style="padding-right: 24px;">
+                            <div class="d-inline-flex gap-2">
+                                <a href="/editor/aceptarPreguntaSugerida?pregunta_id={{id}}"
+                                   class="btn btn-outline-success d-inline-flex align-items-center gap-2 px-3 py-2 fw-semibold"
+                                   style="border-radius: 10px; font-size: 0.9rem;">
+                                    <i class="bi bi-check-circle"></i> Aceptar
+                                </a>
+                                <a href="/editor/rechazarPreguntaSugerida?pregunta_id={{id}}"
+                                   class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-3 py-2 fw-semibold"
+                                   style="border-radius: 10px; font-size: 0.9rem;">
+                                    <i class="bi bi-x-circle"></i> Rechazar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {{/sugerencias}}
+
+                    {{^sugerencias}}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-5">
+                            <i class="bi bi-inbox fs-1 d-block mb-3" style="color: #CBD5E1;"></i>
+                            No hay preguntas sugeridas pendientes de revisión. ¡Buen trabajo!
+                        </td>
+                    </tr>
+                    {{/sugerencias}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 text-center">
+                                <a href="/editor" class="btn btn-outline-secondary rounded-pill">Volver</a>
+                            </div>
+
+    </div>
+</div>
+
+{{> footer}}
