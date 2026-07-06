@@ -1,4 +1,3 @@
---Agente 007 😎
 CREATE TABLE trampas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cantidad INT NOT NULL DEFAULT 0,

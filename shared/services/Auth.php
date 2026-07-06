@@ -44,6 +44,13 @@ class Auth
     return $usuario->rol_id === Rol::ADMIN->value;
   }
 
+  public static function puedeAccederJugador(): void
+  {
+    if (!self::getUsuarioLoggeado(false)) {
+      Redirect::toLogin();
+    }
+  }
+
   public static function puedeAccederEditor(): void
   {
     if (!self::esEditor() && !self::esAdmin()) {
