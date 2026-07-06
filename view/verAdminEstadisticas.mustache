@@ -57,25 +57,30 @@
                 </div>
                 <div class="row">
                     <div class="col-12 pb-3">
-                          <div class="card text-center h-100">
-                              <div class="card-body d-flex flex-column justify-content-center">
-                                  <canvas id="chartUsuariosPorEdad" style="max-height: 200px;"></canvas>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="col-12 pb-3">
                         <div class="card text-center h-100">
                             <div class="card-body d-flex flex-column justify-content-center">
-                                <canvas id="chartUsuariosPorPais" style="max-height: 200px;"></canvas>
+                                <img src="{{estadisticas.usuariosPorEdadChart}}" alt="Gráfico de usuarios por edad"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 pb-3">
                         <div class="card text-center h-100">
                             <div class="card-body d-flex flex-column justify-content-center">
-                                <canvas id="chartUsuariosPorSexo" style="max-height: 200px;"></canvas>
+                                <img src="{{estadisticas.usuariosPorPaisChart}}" alt="Gráfico de usuarios por país"/>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-12 pb-3">
+                        <div class="card text-center h-100">
+                            <div class="card-body d-flex flex-column justify-content-center">
+                                <img src="{{estadisticas.usuariosPorSexoChart}}" alt="Gráfico de usuarios por sexo"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href="{{base_url}}/admin/estadisticaspdf" download="estadisticas.pdf" class="btn btn-secondary">Descargar PDF</a>
                     </div>
                 </div>
             </div>
@@ -130,90 +135,29 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 pb-3">
+            <div class="card text-center h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <img src="{{estadisticas.usuariosPorEdadChart}}" alt="Gráfico de usuarios por edad"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pb-3">
+            <div class="card text-center h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <img src="{{estadisticas.usuariosPorPaisChart}}" alt="Gráfico de usuarios por país"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pb-3">
+            <div class="card text-center h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <img src="{{estadisticas.usuariosPorSexoChart}}" alt="Gráfico de usuarios por sexo"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('chartUsuariosPorEdad');
-  const chartUsuariosPorEdad = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ["Menores", "Adultos", "Jubilados"],
-      datasets: [
-        {
-          data: [{{estadisticas.cantidadUsuariosEdadMenor}}, {{estadisticas.cantidadUsuariosEdadAdulto}}, {{estadisticas.cantidadUsuariosEdadJubilado}}],
-        }
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Usuarios por grupo de edad'
-        }
-      }
-    }
-  });
-  const ctx2 = document.getElementById('chartUsuariosPorPais');
-  const chartUsuariosPorPais = new Chart(ctx2, {
-    type: 'pie',
-    data: {
-      labels: [
-        {{#estadisticas.usuariosPorPais}}
-          "{{pais}}",
-        {{/estadisticas.usuariosPorPais}}
-      ],
-      datasets: [
-        {
-          data: [
-            {{#estadisticas.usuariosPorPais}}
-              {{cantidad}},
-            {{/estadisticas.usuariosPorPais}}
-          ],
-        }
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Usuarios por país'
-        }
-      }
-    }
-  });
-
-  const ctx3 = document.getElementById('chartUsuariosPorSexo');
-  const chartUsuariosPorSexo = new Chart(ctx3, {
-    type: 'pie',
-    data: {
-      labels: [
-        {{#estadisticas.usuariosPorSexo}}
-          "{{sexo}}",
-        {{/estadisticas.usuariosPorSexo}}
-      ],
-      datasets: [
-        {
-          data: [
-            {{#estadisticas.usuariosPorSexo}}
-              {{cantidad}},
-            {{/estadisticas.usuariosPorSexo}}
-          ],
-        }
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Usuarios por sexo'
-        }
-      }
-    }
-  });
-</script>
 
 {{>footer}}

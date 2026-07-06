@@ -3,13 +3,11 @@
 class PreguntasModel
 {
     private Database $database;
-    private Random $random;
 
 
-    public function __construct(Database $database, Random $random)
+    public function __construct(Database $database)
     {
         $this->database = $database;
-        $this->random = $random;
     }
 
     public function getAllElementos()
@@ -19,24 +17,6 @@ class PreguntasModel
         Log::info("SQL : $sql");
         return $this->database->query($sql);
     }
-
-    public function getPreguntaId()
-    {
-
-        $this->random->random();
-        $id = $this->random->getRandom();
-        $sql = "SELECT * FROM preguntas WHERE id = ? AND activa = 1";
-        Log::info("SQL : $sql: $id");
-        return $this->database->query($sql, [$id]);
-    }
-
-    public function getRespuestasPorPregunta()
-    {
-        $id = $this->random->getRandom();
-        $sql = "SELECT * FROM respuestas WHERE pregunta_id =?";
-        Log::info("SQL : $sql: $id");
-        return $this->database->query($sql, [$id]);
-    }
     public function crearNuevoElemento(string $nombre)
     {
         $sql = "INSERT INTO ejemplo (nombre) VALUES (?)";
@@ -44,28 +24,27 @@ class PreguntasModel
         return $this->database->execute($sql, [$nombre]);
     }
 
-    public function agregarPregunta($enunciado, $categoriaId, $estado = 'activa')
+    public function agregarPregunta($enunciado, $categoria_id)
     {
-        $sql = "INSERT INTO preguntas (enunciado, categoria_id, estado) VALUES (?, ?, ?)";
-        Log::info("SQL: $sql con valores: [$enunciado, $categoriaId, $estado]");
-        $this->database->execute($sql, [$enunciado, $categoriaId, $estado]);
-        return $this->database->getConexion()->insert_id;
+        $sql = "INSERT INTO preguntas(enunciado, categoria_id,activa) VALUES (?,?,0)";
+        Log::info("SQL: $sql");
+        return $this->database->execute($sql, [$enunciado, $categoria_id]);
     }
 
-    public function modificarPregunta($id,$enunciado, $categoria_id)
+    public function modificarPregunta($id, $enunciado, $categoria_id)
     {
         $sql = "UPDATE preguntas 
         SET enunciado = ?, categoria_id = ?
         WHERE id = ?";
         Log::info("SQL : $sql: $id");
-        return $this->database->execute($sql, [$enunciado, $categoria_id,$id]);
+        return $this->database->execute($sql, [$enunciado, $categoria_id, $id]);
     }
 
     public function eliminarRespuestasPorPregunta($pregunta_id)
     {
         $sql = "DELETE FROM respuestas WHERE pregunta_id = ?";
         Log::info("SQL: $sql : $pregunta_id");
-        return $this->database->execute($sql,[$pregunta_id]);
+        return $this->database->execute($sql, [$pregunta_id]);
     }
 
     public function darDeBajaPregunta($id)
@@ -81,7 +60,7 @@ class PreguntasModel
     {
         $sql = "INSERT INTO respuestas(pregunta_id,texto,es_correcta) VALUES (?,?,?)";
         Log::info("SQL: $sql");
-        return $this->database->execute($sql,[$pregunta_id, $texto, $es_correcta]);
+        return $this->database->execute($sql, [$pregunta_id, $texto, $es_correcta]);
     }
 
     public function getCategorias()
@@ -119,14 +98,14 @@ class PreguntasModel
         $sql = "SELECT p.id, p.enunciado, c.nombre AS nombre_categoria 
             FROM preguntas p
             JOIN categorias c ON p.categoria_id = c.id
-            WHERE p.estado = 'sugerida'";
+            WHERE p.activa = 0";
         return $this->database->query($sql);
     }
 
     public function aceptarPreguntaSugeridaPorUsuario($id)
     {
         $sql = "UPDATE preguntas
-                SET estado = 'activa'
+                SET activa = 1
                 WHERE id = ?";
         Log::info("SQL: $sql: $id");
         return $this->database->execute($sql,[$id]);
@@ -134,9 +113,7 @@ class PreguntasModel
 
     public function darDeBajaPreguntaSugeridaPorUsuario($id)
     {
-        $sql = "UPDATE preguntas 
-                SET estado = 'rechazada'
-                WHERE id = ?";
+        $sql = "DELETE FROM preguntas WHERE id = ?";
         Log::info("SQL: $sql: $id");
         return $this->database->execute($sql,[$id]);
     }
