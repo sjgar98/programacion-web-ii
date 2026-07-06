@@ -3,10 +3,12 @@
 class AdminModel
 {
   private Database $database;
+  private ChartService $chartService;
 
-  public function __construct(Database $database)
+  public function __construct(Database $database, ChartService $chartService)
   {
     $this->database = $database;
+    $this->chartService = $chartService;
   }
 
   public function obtenerUsuarios(): array
@@ -42,16 +44,36 @@ class AdminModel
     $cantidadUsuariosEdadJubilado = $this->database->query("SELECT COUNT(*) AS cantidad FROM usuarios WHERE YEAR(CURDATE()) - anio_nacimiento >= 65", [], true)[0]->cantidad;
     $cantidadUsuariosEdadAdulto = $totalUsuarios - $cantidadUsuariosEdadMenor - $cantidadUsuariosEdadJubilado;
 
+    $usuariosPorEdadChart = $this->chartService->generarGraficoTorta(
+      "Usuarios por Edad",
+      "Cantidad",
+      [$cantidadUsuariosEdadMenor, $cantidadUsuariosEdadAdulto, $cantidadUsuariosEdadJubilado],
+      "Rango de Edad",
+      ["Menor de 18", "Adulto (18-64)", "Jubilado (65+)"],
+    );
+    $usuariosPorPaisChart = $this->chartService->generarGraficoTorta(
+      "Usuarios por País",
+      "Cantidad",
+      array_column($usuariosPorPais, 'cantidad'),
+      "Pais",
+      array_column($usuariosPorPais, 'pais'),
+    );
+    $usuariosPorSexoChart = $this->chartService->generarGraficoTorta(
+      "Usuarios por Sexo",
+      "Cantidad",
+      array_column($usuariosPorSexo, 'cantidad'),
+      "Sexo",
+      array_column($usuariosPorSexo, 'sexo'),
+    );
+
     return (object)[
       "totalUsuarios" => $totalUsuarios,
       "totalPartidas" => $totalPartidas,
       "totalPreguntas" => $totalPreguntas,
       "usuariosConPorcentaje" => $usuariosConPorcentaje,
-      "usuariosPorPais" => $usuariosPorPais,
-      "usuariosPorSexo" => $usuariosPorSexo,
-      "cantidadUsuariosEdadMenor" => $cantidadUsuariosEdadMenor,
-      "cantidadUsuariosEdadAdulto" => $cantidadUsuariosEdadAdulto,
-      "cantidadUsuariosEdadJubilado" => $cantidadUsuariosEdadJubilado
+      "usuariosPorEdadChart" => $usuariosPorEdadChart,
+      "usuariosPorPaisChart" => $usuariosPorPaisChart,
+      "usuariosPorSexoChart" => $usuariosPorSexoChart
     ];
   }
 }

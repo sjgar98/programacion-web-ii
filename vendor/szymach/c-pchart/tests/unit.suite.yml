@@ -1,0 +1,6 @@
+actor: UnitTester
+modules:
+    enabled:
+        - Asserts
+        - Filesystem
+        - Tests\CpChart\Support\Helper\Unit
