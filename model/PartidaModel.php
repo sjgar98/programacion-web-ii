@@ -102,7 +102,7 @@ class PartidaModel
         }
     }
 
-    public function reestabelecerPartida($respondioBien, $idRespuestaElegida)
+    public function reestabelecerPartida($respondioBien, $idRespuestaElegida, $usoTrampa)
     {
         if (empty($_SESSION['pregunta']) || empty($_SESSION['id_partida'])) {
             return;
@@ -112,21 +112,43 @@ class PartidaModel
         $idPartida = $_SESSION['id_partida'];
         $idJugador = $_SESSION['usuario_loggeado']->id;
 
+        $contador = $_SESSION['contador_preguntas_seguidas'] ?? 0;
 
         if ($idRespuestaElegida !== null) {
-            $sqlPreguntas_Resueltas = "INSERT INTO preguntas_resueltas (partida_id, jugador_id, pregunta_id, respuesta_id) VALUES (?, ?, ?, ?)";
-            $this->database->execute($sqlPreguntas_Resueltas, [$idPartida, $idJugador, $idPregunta, $idRespuestaElegida]);
+
+            $sqlPreguntas_Resueltas = "INSERT INTO preguntas_resueltas (partida_id, jugador_id, pregunta_id, respuesta_id,uso_trampita) VALUES (?, ?, ?, ?,?)";
+            $this->database->execute($sqlPreguntas_Resueltas, [
+                $idPartida,
+                $idJugador,
+                $idPregunta,
+                $idRespuestaElegida,
+                $usoTrampa ? 1 : 0
+            ]);
         }
 
+
+
         if ($respondioBien) {
+            if ($usoTrampa) {
+                $contador  = 0;
+            } else {
+                $contador  += 1;
+                if ($contador  >= 2) {
+                    $sql = "UPDATE trampas SET cantidad = cantidad + 1 WHERE jugador_id = ?";
+                    $this->database->execute($sql, [$idJugador]);
+                    $contador  = 0;
+                }
+            }
             $sqlPuntaje = "UPDATE partidas SET puntaje = puntaje + 10 WHERE id = ?";
             $this->database->execute($sqlPuntaje, [$idPartida]);
         } else {
             $sqlCierre = "UPDATE partidas SET completada = 1 WHERE id = ?";
             $this->database->execute($sqlCierre, [$idPartida]);
             unset($_SESSION['id_partida']);
+            $contador  = 0;
         }
 
+        $_SESSION['contador_preguntas_seguidas'] = $contador;
         unset($_SESSION['pregunta']);
         unset($_SESSION['respuesta']);
 
@@ -224,5 +246,19 @@ class PartidaModel
 
         $resultado = $this->database->query($sql, [$jugadorId]);
         return $resultado[0]['ratio'] ?? 0.5;
+    }
+
+    public function obtenerRespuestaCorrectaPorPregunta($idPregunta)
+    {
+
+        $sql = "SELECT * FROM respuestas  WHERE  pregunta_id = ? AND es_correcta = 1";
+        $resultado = $this->database->query($sql, [$idPregunta]);
+        return !empty($resultado) ? $resultado[0] : null;
+    }
+
+    public function descontarTrampaJugador($idJugador)
+    {
+        $sql = "UPDATE trampas SET cantidad = cantidad -1 WHERE jugador_id = ?";
+        $this->database->execute($sql, [$idJugador]);
     }
 }
