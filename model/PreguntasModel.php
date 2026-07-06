@@ -66,7 +66,7 @@ class PreguntasModel
 
     public function getCategorias()
     {
-        $sql = "SELECT * from categorias";
+        $sql = "SELECT * from categorias WHERE eliminada = 0";
         Log::info("SQL: $sql");;
         return $this->database->query($sql);
     }
@@ -119,5 +119,31 @@ class PreguntasModel
         return $this->database->execute($sql,[$id]);
     }
 
+    public function crearNuevaCategoria(string $nombre, string $color)
+    {
+        $sql = "INSERT INTO categorias(nombre, color) VALUES (?, ?)";
+        Log::info("SQL: $sql");
+        return $this->database->execute($sql, [$nombre, $color]);
+    }
+
+    public function eliminarCategoria(int $id)
+    {   
+        $this->database->execute("UPDATE preguntas SET activa = 0 WHERE categoria_id = ?", [$id]);
+        $this->database->execute("UPDATE categorias SET eliminada = 1 WHERE id = ?", [$id]);
+    }
+
+    public function getCategoriaPorId(int $id)
+    {
+        $sql = "SELECT * FROM categorias WHERE id = ?";
+        Log::info("SQL: $sql con ID: $id");
+        return $this->database->query($sql, [$id]);
+    }
+
+    public function modificarCategoria(int $id, string $nombre, string $color)
+    {
+        $sql = "UPDATE categorias SET nombre = ?, color = ? WHERE id = ?";
+        Log::info("SQL: $sql con ID: $id");
+        return $this->database->execute($sql, [$nombre, $color, $id]);
+    }
 
 }

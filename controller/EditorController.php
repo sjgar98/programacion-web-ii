@@ -16,24 +16,69 @@ class EditorController
     }
 
     public function ver(){
-        Auth::puedeAccederEditor();
         $this->renderer->render("editorPantalla");
+    }
+
+    public function listarCategorias()
+    {
+        $categorias = $this->preguntasModel->getCategorias();
+        $this->renderer->render("editorListarCategorias", ["categorias" => $categorias]);
+    }
+
+    public function crearNuevaCategoria()
+    {
+        $this->renderer->render("editorCrearNuevaCategoria");
+    }
+
+    public function guardarNuevaCategoria()
+    {
+        $categoriaNombre = $_POST["nombre"];
+        $categoriaColor = $_POST["color"];
+        $this->preguntasModel->crearNuevaCategoria($categoriaNombre, $categoriaColor);
+        Redirect::to("/editor/listarCategorias");
+    }
+
+    public function eliminarCategoria()
+    {
+        $categoriaId = $_GET["categoria_id"] ?? null;
+        if ($categoriaId) {
+            $this->preguntasModel->eliminarCategoria($categoriaId);
+        }
+        Redirect::to("/editor/listarCategorias");
+    }
+
+    public function modificarCategoria()
+    {
+        $categoriaId = $_GET["categoria_id"] ?? null;
+
+        if (!$categoriaId) {
+            Redirect::to("/editor/listarCategorias");
+        }
+
+        $categoria = $this->preguntasModel->getCategoriaPorId($categoriaId);
+
+        $this->renderer->render("editorModificarCategoria", ["categoria" => $categoria]);
+    }
+
+    public function actualizarCategoria()
+    {
+        $categoriaId = $_POST["id"];
+        $categoriaNombre = $_POST["nombre"];
+        $categoriaColor = $_POST["color"];
+
+        $this->preguntasModel->modificarCategoria($categoriaId, $categoriaNombre, $categoriaColor);
+
+        Redirect::to("/editor/listarCategorias");
     }
 
     public function listarPreguntas()
     {
-        Auth::puedeAccederEditor();
-
         $preguntas = $this->preguntasModel->getPreguntasConCategoria();
-
         $this->renderer->render("editorListarPreguntas", ["preguntas" => $preguntas]);
-
     }
 
     public function eliminarPregunta()
     {
-        Auth::puedeAccederEditor();
-
         $preguntaId = $_GET["pregunta_id"] ?? null;
         if($preguntaId){
             $this->preguntasModel->darDeBajaPregunta($preguntaId);
@@ -43,14 +88,12 @@ class EditorController
 
     public function crearNuevaPregunta()
     {
-        Auth::puedeAccederEditor();
         $nuevaPregunta = $this->preguntasModel->getCategorias();
         $this->renderer->render("editorCrearNuevaPregunta",["categorias" => $nuevaPregunta]);
     }
 
     public function guardarNuevaPregunta()
     {
-        Auth::puedeAccederEditor();
 
         $preguntaEnunciado = $_POST["enunciado"];
         $preguntaCategoriaId = $_POST["categoria_id"];
@@ -68,7 +111,6 @@ class EditorController
 
     public function modificarPregunta()
     {
-        Auth::puedeAccederEditor();
 
         $preguntaId = $_GET["pregunta_id"] ?? null;
 
@@ -108,7 +150,6 @@ class EditorController
 
     public function actualizarPregunta()
     {
-        Auth::puedeAccederEditor();
         $preguntaId = $_POST["id"];
         $preguntaEnunciado = $_POST["enunciado"];
         $preguntaCategoriaId = $_POST["categoria_id"];
@@ -133,7 +174,6 @@ class EditorController
 
     public function verPreguntasSugeridas()
     {
-        Auth::puedeAccederEditor();
 
         $preguntasSugeridas = $this->preguntasModel->getPreguntasSugeridasPorUsuario();
 
@@ -145,7 +185,6 @@ class EditorController
 
     public function aceptarPreguntaSugerida()
     {
-        Auth::puedeAccederEditor();
 
         $preguntaId = $_GET["pregunta_id"] ?? null;
 
@@ -158,7 +197,6 @@ class EditorController
 
     public function rechazarPreguntaSugerida()
     {
-        Auth::puedeAccederEditor();
 
         $preguntaId = $_GET["pregunta_id"] ?? null;
 
