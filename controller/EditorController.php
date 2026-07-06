@@ -76,9 +76,27 @@ class EditorController
 
         $pregunta = $this->preguntasModel->getPreguntaPorId($preguntaId);
         $categorias = $this->preguntasModel->getCategorias();
+        $respuestas = $this->preguntasModel->getRespuestasPorPreguntaId($preguntaId);
+
+        $idCategoriaActual = $pregunta[0]["categoria_id"] ?? null;
+
+        foreach ($categorias as &$categoria) {
+            if ($categoria["id"] == $idCategoriaActual) {
+                $categoria["selected"] = true;
+            } else {
+                $categoria["selected"] = false;
+            }
+        }
+        unset($categoria);
+
         $this->renderer->render("editorModificarPregunta",[
             "pregunta" => $pregunta,
-            "categorias" => $categorias]);
+            "categorias" => $categorias,
+            "es_correcta" => $respuestas[0]["texto"] ?? '',
+            "incorrecta_1" => $respuestas[1]["texto"] ?? '',
+            "incorrecta_2" => $respuestas[2]["texto"] ?? '',
+            "incorrecta_3" => $respuestas[3]["texto"] ?? ''
+        ]);
     }
 
     public function actualizarPregunta()
@@ -98,7 +116,44 @@ class EditorController
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta2, 0);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta3, 0);
         Redirect::to("/editor/listarPreguntas");
+    }
 
+    public function verPreguntasSugeridas()
+    {
+        Auth::puedeAccederEditor();
+
+        $preguntasSugeridas = $this->preguntasModel->getPreguntasSugeridasPorUsuario();
+
+        $this->renderer->render("editorPreguntasSugeridas", [
+            "sugerencias" => $preguntasSugeridas,
+            "total_sugerencias" => count($preguntasSugeridas)
+        ]);
+    }
+
+    public function aceptarPreguntaSugerida()
+    {
+        Auth::puedeAccederEditor();
+
+        $preguntaId = $_GET["pregunta_id"] ?? null;
+
+        if($preguntaId){
+            $this->preguntasModel->aceptarPreguntaSugeridaPorUsuario($preguntaId);
+        }
+
+        Redirect::to("/editor/verPreguntasSugeridas");
+    }
+
+    public function rechazarPreguntaSugerida()
+    {
+        Auth::puedeAccederEditor();
+
+        $preguntaId = $_GET["pregunta_id"] ?? null;
+
+        if($preguntaId){
+            $this->preguntasModel->darDeBajaPreguntaSugeridaPorUsuario($preguntaId);
+        }
+
+        Redirect::to("/editor/verPreguntasSugeridas");
     }
 
 
