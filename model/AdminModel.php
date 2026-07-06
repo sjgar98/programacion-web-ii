@@ -22,8 +22,20 @@ class AdminModel
 
   public function obtenerEstadisticas(Request $request): stdClass
   {
-    $totalUsuarios = $this->database->query("SELECT COUNT(*) AS total FROM usuarios", [], true)[0]->total;
-    $totalPartidas = $this->database->query("SELECT COUNT(*) AS total FROM partidas", [], true)[0]->total;
+    $rangoFechas = $this->getRangoFechas($request->get("periodo"));
+
+    $totalUsuarios = $this->database->query(
+      "SELECT COUNT(*) AS total FROM usuarios"
+        . ($rangoFechas !== null ? "\nWHERE (fecha_registro BETWEEN ? AND ?)" : ""),
+      $rangoFechas ? [$rangoFechas->fechaInicio, $rangoFechas->fechaFin] : [],
+      true
+    )[0]->total;
+    $totalPartidas = $this->database->query(
+      "SELECT COUNT(*) AS total FROM partidas"
+        . ($rangoFechas !== null ? "\nWHERE (fecha BETWEEN ? AND ?)" : ""),
+      $rangoFechas ? [$rangoFechas->fechaInicio, $rangoFechas->fechaFin] : [],
+      true
+    )[0]->total;
     $totalPreguntas = $this->database->query("SELECT COUNT(*) AS total FROM preguntas", [], true)[0]->total;
     $usuariosConPorcentaje = $this->database->query(
       "SELECT
@@ -33,15 +45,44 @@ class AdminModel
         ROUND(COALESCE(AVG(r.es_correcta), 0) * 100, 2) AS porcentaje_correctas
       FROM usuarios u
       LEFT JOIN preguntas_resueltas pr ON u.id = pr.jugador_id
-      LEFT JOIN respuestas r ON pr.respuesta_id = r.id
-      GROUP BY u.id;",
-      [],
+      LEFT JOIN respuestas r ON pr.respuesta_id = r.id"
+        . ($rangoFechas !== null ? "\nWHERE (pr.fecha BETWEEN ? AND ?)\n" : "\n") .
+        "GROUP BY u.id;",
+      $rangoFechas ? [$rangoFechas->fechaInicio, $rangoFechas->fechaFin] : [],
       true
     );
-    $usuariosPorPais = $this->database->query("SELECT pais, COUNT(*) AS cantidad FROM usuarios GROUP BY pais", [], true);
-    $usuariosPorSexo = $this->database->query("SELECT sexo, COUNT(*) AS cantidad FROM usuarios GROUP BY sexo", [], true);
-    $cantidadUsuariosEdadMenor = $this->database->query("SELECT COUNT(*) AS cantidad FROM usuarios WHERE YEAR(CURDATE()) - anio_nacimiento < 18", [], true)[0]->cantidad;
-    $cantidadUsuariosEdadJubilado = $this->database->query("SELECT COUNT(*) AS cantidad FROM usuarios WHERE YEAR(CURDATE()) - anio_nacimiento >= 65", [], true)[0]->cantidad;
+    $usuariosPorPais = $this->database->query(
+      "SELECT pais, COUNT(*) AS cantidad
+      FROM usuarios"
+        . ($rangoFechas !== null ? "\nWHERE (fecha_registro BETWEEN ? AND ?)" : "")
+        . "\n
+        GROUP BY pais",
+      $rangoFechas ? [$rangoFechas->fechaInicio, $rangoFechas->fechaFin] : [],
+      true
+    );
+    $usuariosPorSexo = $this->database->query(
+      "SELECT sexo, COUNT(*) AS cantidad
+      FROM usuarios"
+        . ($rangoFechas !== null ? "\nWHERE (fecha_registro BETWEEN ? AND ?)" : "")
+        . "\n
+      GROUP BY sexo",
+      $rangoFechas ? [$rangoFechas->fechaInicio, $rangoFechas->fechaFin] : [],
+      true
+    );
+    $cantidadUsuariosEdadMenor = $this->database->query(
+      "SELECT COUNT(*) AS cantidad
+      FROM usuarios
+      WHERE YEAR(CURDATE()) - anio_nacimiento < 18" .
+        ($rangoFechas !== null ? " AND (fecha_registro BETWEEN ? AND ?)" : "")
+        . "\n",
+      $rangoFechas ? [$rangoFechas->fechaInicio, $rangoFechas->fechaFin] : [],
+      true
+    )[0]->cantidad;
+    $cantidadUsuariosEdadJubilado = $this->database->query(
+      "SELECT COUNT(*) AS cantidad FROM usuarios WHERE YEAR(CURDATE()) - anio_nacimiento >= 65",
+      [],
+      true
+    )[0]->cantidad;
     $cantidadUsuariosEdadAdulto = $totalUsuarios - $cantidadUsuariosEdadMenor - $cantidadUsuariosEdadJubilado;
 
     $usuariosPorEdadChart = $this->chartService->generarGraficoTorta(
@@ -75,5 +116,27 @@ class AdminModel
       "usuariosPorPaisChart" => $usuariosPorPaisChart,
       "usuariosPorSexoChart" => $usuariosPorSexoChart
     ];
+  }
+
+  private function getRangoFechas(string|null $periodo): stdClass|null
+  {
+    $hoy = new DateTime();
+    switch ($periodo) {
+      case "dia":
+        $fechaInicio = (clone $hoy)->modify('-1 day');
+        break;
+      case "semana":
+        $fechaInicio = (clone $hoy)->modify('-7 days');
+        break;
+      case "mes":
+        $fechaInicio = (clone $hoy)->modify('-1 month');
+        break;
+      case "año":
+        $fechaInicio = (clone $hoy)->modify('-1 year');
+        break;
+      default:
+        return null;
+    }
+    return (object)["fechaInicio" => $fechaInicio->format('Y-m-d'), "fechaFin" => $hoy->format('Y-m-d')];
   }
 }
