@@ -1,0 +1,2 @@
+ALTER TABLE categorias
+ADD COLUMN eliminada TINYINT DEFAULT 0;

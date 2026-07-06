@@ -1,0 +1,43 @@
+{{> header}}
+
+<div class="container my-5">
+    <div class="mb-3">
+        <a href="/editor/listarCategorias" class="text-decoration-none" style="color: #4338CA;">
+            ← Volver a Listar Categorías
+        </a>
+    </div>
+
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #1E1B4B;">Modificar Categoría</h2>
+        <p class="text-muted">Editá los datos de la categoría. Los cambios se guardarán al confirmar.</p>
+    </div>
+
+    <div class="card shadow-sm border-0 p-4" style="border-radius: 12px;">
+        <form action="/editor/actualizarCategoria" method="POST">
+
+            {{#categoria}}
+            <input type="hidden" name="id" value="{{id}}">
+  
+            <div class="mb-4">
+                <label for="nombre" class="form-label fw-semibold text-secondary">Nombre de la categoría</label>
+                <input type="text" class="form-control p-3" id="nombre" name="nombre" placeholder="Escribí el nombre de la categoría..." style="border-radius: 8px;" required value="{{nombre}}">
+            </div>
+
+            <div class="mb-4">
+                <label for="color" class="form-label fw-semibold text-secondary">Color de la categoría</label>
+                <input type="color" class="form-control form-control-color" id="color" name="color" style="border-radius: 8px; height: 50px;" required value="{{color}}">
+            </div>
+            {{/categoria}}
+
+            <hr class="text-muted my-4">
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="/editor/listarCategorias" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 8px;">Cancelar</a>
+                <button type="submit" class="btn text-white px-4 py-2" style="background-color: #4338CA; border-radius: 8px;">Guardar Cambios</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{{> footer}}
