@@ -41,6 +41,11 @@ class MysqliDatabase implements Database
     return $this->conexion->affected_rows;
   }
 
+  public function getLastInsertId(): int
+  {
+    return $this->conexion->insert_id;
+  }
+
   public function begin_transaction(): void
   {
     $this->conexion->begin_transaction();
@@ -55,11 +60,6 @@ class MysqliDatabase implements Database
   {
     $this->conexion->rollback();
   }
-
-    public function getConexion(): \mysqli
-    {
-        return $this->conexion;
-    }
 
   public function __destruct()
   {

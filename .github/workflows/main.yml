@@ -87,4 +87,4 @@ jobs:
           local_path: ./*
           remote_path: ${{ secrets.FTP_SERVER_DIR }}
           sftpArgs: '-o ConnectTimeout=5'
-          rsyncArgs: '--exclude=.git --exclude=*.log --include=public/avatars/default.webp --exclude=public/avatars/*'
+          rsyncArgs: '--exclude=.git --exclude=*.log --include=public/avatars/default.webp --exclude=public/avatars/* --filter="p,i vendor/**"'
