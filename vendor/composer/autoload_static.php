@@ -6,7 +6,17 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit071586d19f5409de22b3235d85d8476c
 {
+    public static $files = array (
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'db356362850385d08a5381de2638b5fd' => __DIR__ . '/..' . '/mpdf/mpdf/src/functions.php',
+        '7bb4f001eb5212bde073bf47a4bbedad' => __DIR__ . '/..' . '/szymach/c-pchart/constants.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        's' =>
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
         'c' =>
         array (
             'chillerlan\\Settings\\' => 20,
@@ -14,15 +24,32 @@ class ComposerStaticInit071586d19f5409de22b3235d85d8476c
         ),
         'P' =>
         array (
+            'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' =>
         array (
             'Mustache\\' => 9,
+            'Mpdf\\PsrLogAwareTrait\\' => 22,
+            'Mpdf\\PsrHttpMessageShim\\' => 24,
+            'Mpdf\\' => 5,
+        ),
+        'D' =>
+        array (
+            'DeepCopy\\' => 9,
+        ),
+        'C' =>
+        array (
+            'CpChart\\' => 8,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'setasign\\Fpdi\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
         'chillerlan\\Settings\\' =>
         array (
             0 => __DIR__ . '/..' . '/chillerlan/php-settings-container/src',
@@ -31,6 +58,14 @@ class ComposerStaticInit071586d19f5409de22b3235d85d8476c
         array (
             0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
         ),
+        'Psr\\Log\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
+        'Psr\\Http\\Message\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'PHPMailer\\PHPMailer\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -38,6 +73,26 @@ class ComposerStaticInit071586d19f5409de22b3235d85d8476c
         'Mustache\\' =>
         array (
             0 => __DIR__ . '/..' . '/mustache/mustache/src',
+        ),
+        'Mpdf\\PsrLogAwareTrait\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/psr-log-aware-trait/src',
+        ),
+        'Mpdf\\PsrHttpMessageShim\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/psr-http-message-shim/src',
+        ),
+        'Mpdf\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
+        ),
+        'DeepCopy\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'CpChart\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/szymach/c-pchart/src',
         ),
     );
 

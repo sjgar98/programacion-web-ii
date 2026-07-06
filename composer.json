@@ -2,6 +2,8 @@
   "require": {
     "mustache/mustache": "^3.2",
     "chillerlan/php-qrcode": "^6.0",
-    "phpmailer/phpmailer": "^7.1"
+    "phpmailer/phpmailer": "^7.1",
+    "szymach/c-pchart": "^3.1",
+    "mpdf/mpdf": "^8.3"
   }
 }

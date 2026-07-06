@@ -37,6 +37,11 @@ class Configurator
     );
   }
 
+  private function getChartService(): ChartService
+  {
+    return new ChartService();
+  }
+
   public function getOrDefault(string $controllerName, string $defaultControllerName)
   {
     $getter = 'get' . ucfirst($controllerName) . 'Controller';
@@ -148,7 +153,7 @@ class Configurator
 
   public function getAdminModel()
   {
-    return new AdminModel($this->getDatabase());
+    return new AdminModel($this->getDatabase(), $this->getChartService());
   }
 
   public function getReportesModel()
