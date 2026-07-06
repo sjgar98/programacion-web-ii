@@ -24,11 +24,12 @@ class PreguntasModel
         return $this->database->execute($sql, [$nombre]);
     }
 
-    public function agregarPregunta($enunciado, $categoria_id)
+    public function agregarPregunta($enunciado, $categoria_id, bool $sugerida = false)
     {
-        $sql = "INSERT INTO preguntas(enunciado, categoria_id,activa) VALUES (?,?,0)";
+        $sql = "INSERT INTO preguntas(enunciado, categoria_id, activa, sugerencia) VALUES (?,?,0,?)";
         Log::info("SQL: $sql");
-        return $this->database->execute($sql, [$enunciado, $categoria_id]);
+        $this->database->execute($sql, [$enunciado, $categoria_id, $sugerida ? 1 : 0]);
+        return $this->database->getLastInsertId();
     }
 
     public function modificarPregunta($id, $enunciado, $categoria_id)
@@ -98,14 +99,14 @@ class PreguntasModel
         $sql = "SELECT p.id, p.enunciado, c.nombre AS nombre_categoria 
             FROM preguntas p
             JOIN categorias c ON p.categoria_id = c.id
-            WHERE p.activa = 0";
+            WHERE p.sugerencia = 1";
         return $this->database->query($sql);
     }
 
     public function aceptarPreguntaSugeridaPorUsuario($id)
     {
         $sql = "UPDATE preguntas
-                SET activa = 1
+                SET sugerencia = 0, activa = 1
                 WHERE id = ?";
         Log::info("SQL: $sql: $id");
         return $this->database->execute($sql,[$id]);

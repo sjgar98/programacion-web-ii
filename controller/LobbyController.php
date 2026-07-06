@@ -54,7 +54,7 @@ class LobbyController
         $preguntaEsIncorrecta1 = $_POST["es_incorrecta_1"];
         $preguntaEsIncorrecta2 = $_POST["es_incorrecta_2"];
         $preguntaEsIncorrecta3 = $_POST["es_incorrecta_3"];
-        $preguntaId = $this->preguntasModel->agregarPregunta($preguntaEnunciado, $preguntaCategoriaId);
+        $preguntaId = $this->preguntasModel->agregarPregunta($preguntaEnunciado, $preguntaCategoriaId, true);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsCorrecta, 1);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta1, 0);
         $this->preguntasModel->agregarRespuesta($preguntaId,$preguntaEsIncorrecta2, 0);
